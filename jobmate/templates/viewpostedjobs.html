@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #21cfaf; /* Green color with opacity */
+        color: black;
+        #btn
+    {
+      background-color: #007a6c;
+    }
+  
+    .custom-pagination .page-link {
+        color: #dc3545 !important; /* Custom text color */
+        background-color: #f8f9fa !important; /* Custom background color */
+        border-color: #dc3545 !important; /* Custom border color */
+    }
+
+    /* Custom pagination link hover style */
+    .custom-pagination .page-link:hover {
+        color: #fff !important; /* White text color on hover */
+        background-color: #dc3545 !important; /* Custom background color on hover */
+        border-color: #dc3545 !important; /* Custom border color on hover */
+    }
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  
+    }
+    .sidebar {
+      /* Your existing sidebar styles */
+      /* Make sure to set an initial position for the sidebar */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+  
+    .sidebar-open {
+      transform: translateX(0);
+    }
+  
+    .sidebar-toggle {
+      /* Add styling for the hamburger menu icon */
+    }
+    .profile-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+  }
+  
+  .profile-box h3 {
+      margin-top: 0;
+  }
+    
+</style>
+</head>
+<body>
+
+
+  {% include "seekerhead.html" %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="container">
+            <br>
+            {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <br><br>
+            <h1>JOBS</h1>
+
+            <div class="container">
+                <div class="row" id="jobs-container">
+                    {% for job in jobs %}
+                    <div class="col-md-4 mb-4 job-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ job.title }}</h5>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Company</th>
+                                            <td>{{ job.pro_id.cname}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Type</th>
+                                            <td>{{ job.get_type_display }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Location</th>
+                                            <td>{{ job.location }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Status</th>
+                                            <td>
+                                                {% if job.status == 'Active' %}
+                                                <span class="badge bg-success">{{ job.status }}</span>
+                                                {% elif job.status == 'On Hold' %}
+                                                <span class="badge bg-warning text-dark">{{ job.status }}</span>
+                                                {% elif job.status == 'Closed' %}
+                                                <span class="badge bg-danger">{{ job.status }}</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Deadline</th>
+                                            <td>
+                                                {% if job.deadline > now %}
+                                                <span class="badge bg-danger">Expired</span>
+                                                {% else %}
+                                                {{ job.deadline|date:'d-m-Y' }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <a href="{% url 'viewjobdetails' job_id=job.job_id %}" class="btn btn-dark">View
+                                    Details</a>
+
+                                <form method="post" action="{% url 'applyjob' job_id=job.job_id %}"
+                                    style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">Apply</button>
+                                </form>
+
+                                <form action="{% url 'save_job' job_id=job.job_id %}" method="post"
+                                    style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Save <i
+                                            class="bi bi-heart"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="pagination-container">
+                    <ul class="pagination justify-content-center custom-pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </div>
+                
+                
+                
+                
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var currentPage = 1;
+        var pageSize = 6;
+        var totalJobs = $(".job-card").length;
+        var totalPages = Math.ceil(totalJobs / pageSize);
+
+        function showPage(pageNumber) {
+            $(".job-card").hide();
+            $(".job-card").slice((pageNumber - 1) * pageSize, pageNumber * pageSize).show();
+        }
+
+        function renderPagination() {
+            $("#pagination-container").empty();
+            var paginationHtml = '<ul class="pagination justify-content-center">';
+            paginationHtml += '<li class="page-item" id="previous-page"><a class="page-link" href="#">Previous</a></li>';
+            for (var i = 1; i <= totalPages; i++) {
+                paginationHtml += '<li class="page-item"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>';
+            }
+            paginationHtml += '<li class="page-item" id="next-page"><a class="page-link" href="#">Next</a></li>';
+            paginationHtml += '</ul>';
+            $("#pagination-container").html(paginationHtml);
+        }
+
+        showPage(currentPage);
+        renderPagination();
+
+        $(document).on("click", ".page-link", function (e) {
+            e.preventDefault();
+            var page = parseInt($(this).data("page"));
+            if (!isNaN(page) && page >= 1 && page <= totalPages) {
+                currentPage = page;
+                showPage(currentPage);
+            }
+        });
+
+        $("#next-page").on("click", function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        $("#previous-page").on("click", function () {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+    });
+</script>
+</body>
+    </html>

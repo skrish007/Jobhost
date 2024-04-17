@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #21cfaf; /* Green color with opacity */
+        color: black;
+        #btn
+    {
+      background-color: #007a6c;
+    }
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  
+    }
+    .sidebar {
+      /* Your existing sidebar styles */
+      /* Make sure to set an initial position for the sidebar */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+  
+    .sidebar-open {
+      transform: translateX(0);
+    }
+  
+    .sidebar-toggle {
+      /* Add styling for the hamburger menu icon */
+    }
+    .profile-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+  }
+  
+  .profile-box h3 {
+      margin-top: 0;
+  }
+  .btn:hover {
+    background-color: #000; /* Set the background color on hover to black */
+}
+    
+</style>
+</head>
+<body>
+
+
+
+
+    {% include 'seekerhead.html' %}
+
+  <body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Left half for image -->
+                <br> <br> <br>
+                <img src="{% static 'assets/img/pw.jpg' %}"  alt="." class="img-fluid" style="height: 700px; width: 700px;">
+            </div>
+            <div class="col-md-6" >
+                <!-- Right half for the form -->
+                <br> <br> <br>  <br> <br> 
+                
+                    <br> <br>
+                    {% if msg %}
+                        <div id="alertBox" class="alert alert-danger">
+                            {{ msg }}
+                        </div>
+                    {% endif %}
+                    <h4 class="mt-5" style="font-weight:bold">Change Password</h4><br>
+
+                    <table class="table table-hover">
+                        <form role="form" class="was-validated" name="frm" method="post">
+                            {% csrf_token %}
+        
+                            <div class="form-group">
+                                <label for="current_password">Old Password</label>
+                                <input type="password" class="form-control" id="current_password" name="current_password" required>
+                            </div>
+        
+                            <!-- Password -->
+            <div class="form-group">
+                <label class="form-label" for="password">New Password</label>
+                <input type="password" id="password" name="password" class="form-control" required  onInput="validatePassword()">
+                <span id="pwMsg" class="pwMsg"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label class="form-label" for="confirm_password">Confirm New Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required  onInput="validateConfirmPassword()">
+                <span id="confirm_password_error" class="confirm_password_error"></span>
+            </div>
+            <br> 
+
+        
+                          <button type="submit" class="btn btn-dark" id="bt" name="bt" onclick="validatePassword(); validateConfirmPassword();">Update</button> <br> <br>
+                            <button type="reset" class="btn btn-danger" id="rt" name="rt">Reset</button> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Bootstrap JS and other scripts if needed -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+            <script>
+                function validateForm() {
+                const password = document.getElementById('password').value;
+                const confirm_password = document.getElementById('confirm_password').value;
+                }
+                function validatePassword() {
+                    const password = document.getElementById("password").value;
+                    const pwMsg = document.getElementById("pwMsg");
+                
+                    const lengthValid = /.{8,20}/.test(password); // Corrected regex
+                    const hasUpperCase = /[A-Z]/.test(password);
+                    const hasLowerCase = /[a-z]/.test(password);
+                    const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password);
+                    const hasDigit = /[0-9]/.test(password);
+                    const whiteSpace = /\s/.test(password);
+                
+                    let message = "";
+                
+                    if (!lengthValid) {
+                        message = '<i class="bi bi-x-circle-fill text-danger"></i> Password must be 8 to 20 characters long.<br>';
+                    }
+                    if (password.length >= 20) {
+                        document.getElementById("password").value = password.slice(0, 20);
+                    }
+                    if (!hasUpperCase) {
+                        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one uppercase letter.<br>';
+                    }
+                    if (!hasLowerCase) {
+                        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one lowercase letter.<br>';
+                    }
+                    if (!hasSpecialChar) {
+                        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one special character.<br>';
+                    }
+                    if (!hasDigit) {
+                        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one digit.<br>';
+                    }
+                    if (whiteSpace) {
+                        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must not contain any whitespace characters.';
+                    }
+                
+                    pwMsg.innerHTML = message;
+                
+                    if (lengthValid && hasUpperCase && hasLowerCase && hasSpecialChar && hasDigit && !whiteSpace) {
+                        message = '<i class="bi bi-check-square-fill text-success mt-5"></i> Password is valid!';
+                    }
+                
+                    pwMsg.innerHTML = message;
+                }
+                
+                function validateConfirmPassword() {
+                    const password = document.getElementById('password').value;
+                    const confirm_password = document.getElementById('confirm_password').value;
+                    const confirm_password_error = document.getElementById('confirm_password_error');
+                    let message = "";
+                
+                    if (confirm_password !== password) {
+                        message = '<i class="bi bi-x-circle-fill text-danger"></i> Passwords do not match';
+                    } else {
+                        message = '<i class="bi bi-check-square-fill text-success mt-5"></i> Passwords matched';
+                    }
+                
+                    confirm_password_error.innerHTML = message;
+                }
+            </script>
+                    {{msg}}
+                    </div>
+               
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+  <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+      transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+      background-color: #21cfaf; /* Green color with opacity */
+      color: black;
+    }
+
+    #btn {
+      background-color: #007a6c;
+    }
+
+    #session {
+      background-color: black;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+    }
+
+    #session:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+    }
+
+    .sidebar {
+      /* Your existing sidebar styles */
+      /* Make sure to set an initial position for the sidebar */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-open {
+      transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+      /* Add styling for the hamburger menu icon */
+    }
+
+    .profile-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .profile-box h3 {
+      margin-top: 0;
+    }
+    body {
+      background-image: url('/static/assets/img/whitebg.jpg');
+      background-size: cover; /* Adjust as needed */
+      /* Other background properties */
+  }
+  </style>
+</head>
+<body>
+  {% include 'seekerhead.html' %}
+
+  <main id="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <br><br><br><br><br><br>
+          <img src="{% static 'assets/img/seek.jpg' %}" alt="" style="max-height: 800px; max-width: 500px;" class="image">
+        </div>
+
+        <div class="col-md-5">
+          <br><br><br><br><br><br><br><br><br><br>
+          {% if messages %}
+          <div class="messages-container">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">
+              {{ message }}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!-- Job Search Section -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h2 class="text-center">Find Your Dream Job</h2>
+                  <br>
+                  <div class="input-group mb-3">
+                    <form method="POST" class="d-flex" action="{% url 'search-view3' %}">
+                      {% csrf_token %}
+                      <span class="input-group-text"><i class="bi bi-briefcase-fill"></i></span>
+                      <input type="search" class="form-control me-2" name="search_query_jobs" placeholder="What?" aria-label="Search Jobs">
+                      <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                      <input type="search" class="form-control me-2" name="search_query_loc" placeholder="Where?" aria-label="Search Location">
+                      <button class="btn btn-dark btn-lg" id="btn" type="submit">Search</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br><br><br><br>
+        
+
+<div class="container" id="step1">
+  <div class="row">
+    <div class="col-md-6">
+      <br>
+      <img src="{% static 'assets/img/res12.jpg' %}" alt="" style="max-height: 800px; max-width: 500px;" class="image">
+    </div>
+    <div class="col-md-6">
+      <br><br>
+      <h2>Check your Resume Score</h2>
+      <!-- Replace the form with a Bootstrap button -->
+      <form method="GET" action="{% url 'resumescreen1' %}">
+        <button type="submit" name= "restest" id="restest">Resume Screening</button>
+      </form>
+      
+
+
+
+      </div>
+    </div>
+  </main>
+
+  <br><br><br>
+  {% include "footer.html" %}
+</body>
+</html>

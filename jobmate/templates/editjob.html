@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #21cfaf; /* Green color with opacity */
+        color: black;
+        #btn
+    {
+      background-color: #007a6c;
+    }
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  
+    }
+    .sidebar {
+      /* Your existing sidebar styles */
+      /* Make sure to set an initial position for the sidebar */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+  
+    .sidebar-open {
+      transform: translateX(0);
+    }
+  
+    .sidebar-toggle {
+      /* Add styling for the hamburger menu icon */
+    }
+    .profile-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+  }
+  
+  .profile-box h3 {
+      margin-top: 0;
+  }
+    
+</style>
+</head>
+<body>
+
+
+
+
+  {% include 'prohead.html' %}
+  <main id="main">
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="ion ion-search"></i></a></li>
+          </ul>
+          <div class="search-element">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn" type="submit"><i class="ion ion-search"></i></button>
+          </div>
+        </form>
+        <ul class="navbar-nav navbar-right">
+            <li class="dropdown dropdown-list-toggle">
+                <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep">
+                    <i class="ion ion-ios-bell-outline"></i>
+                </a>
+                <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    <!-- Add notifications here -->
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
+                    <i class="ion ion-android-person d-lg-none"></i>
+                    <div class="d-sm-none d-lg-inline-block">{{ user.username }}
+                    <span id="more-details"><i class="ti-angle-down"></i></span> </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <ul>
+                        <li class="more-details">
+                            <a href="#"><i class="ti-user"></i>View Profile</a>
+                            <a href="#!"><i class="ti-settings"></i>Settings</a>
+                            <a href="/logout"><i class="ti-layout-sidebar-left"></i>Logout</a> <!-- Changed the logout link -->
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+      </nav>
+
+      <div class="main-content">
+        <section class="section">
+            <div class="container col-md-6">
+                <h1>Edit Job: {{ job.title }}</h1>
+                <form method="post" action="/edit_job/{{job.job_id}}">
+                  {% csrf_token %}
+            
+                  <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ job.title }}" required>
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="type">Type:</label>
+                    <select class="form-control" id="type" name="type">
+                      <option value="Full-Time" {% if job.type == 'Full-Time' %}selected{% endif %}>Full-Time</option>
+                      <option value="Part-Time" {% if job.type == 'Part-Time' %}selected{% endif %}>Part-Time</option>
+                      <option value="Contract" {% if job.type == 'Contract' %}selected{% endif %}>Contract</option>
+                    </select>
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{ job.location }}">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="status">Status:</label>
+                    <input type="text" class="form-control" id="status" name="status" value="{{ job.status }}">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="deadline">Deadline:</label>
+                    <input type="date" class="form-control" id="deadline" name="deadline" value="{{ job.deadline }}">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="description" name="description" rows="4">{{ job.description }}</textarea>
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="requirements">Requirements:</label>
+                    <textarea class="form-control" id="requirements" name="requirements" rows="4">{{ job.requirements }}</textarea>
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="minexp">Minimum Experience:</label>
+                    <input type="text" class="form-control" id="minexp" name="minexp" value="{{ job.minexp }}">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="min_salary">Minimum Salary:</label>
+                    <input type="text" class="form-control" id="min_salary" name="min_salary" value="{{ job.min_salary }}">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="max_salary">Maximum Salary:</label>
+                    <input type="text" class="form-control" id="max_salary" name="max_salary" value="{{ job.max_salary }}">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="mode">Mode:</label>
+                    <select class="form-control" id="mode" name="mode">
+                      <option value="Online" {% if job.mode == 'Online' %}selected{% endif %}>Online</option>
+                      <option value="Offline" {% if job.mode == 'Offline' %}selected{% endif %}>Offline</option>
+                      <option value="Both" {% if job.mode == 'Both' %}selected{% endif %}>Both</option>
+                    </select>
+                  </div>
+            
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                  <a href="" class="btn btn-secondary">Cancel</a>
+                </form>
+              </div>
+              
+            </div>
+        </section>
+        

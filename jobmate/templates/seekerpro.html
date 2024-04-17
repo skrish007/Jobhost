@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #007a6c; /* Green color with opacity */
+        color: black;
+    }
+    #btn
+    {
+      background-color: #007a6c;
+    }
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover,.btn2:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  }
+  .container2 {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.profile-box h3 {
+    margin-top: 0;
+}
+
+.table td {
+    padding: 10px;
+}
+.btn2{
+    background-color:#DC3545;
+    margin:auto;
+    padding:25px;
+    border-radius: 10px;
+    font-weight:bold;
+
+    font-family:Lato;
+    color:white;
+   
+}
+</style>
+</head>
+
+
+
+
+
+{% include 'seekerhead.html' %}
+  
+  <div class="container2">
+    <h1>My Profile</h1>
+
+    <!-- First Box: Basic Information -->
+    <div class="profile-box">
+        <div class="profile-picture" style="width: 250px; height: 250px; border: 5px solid #007a6c; border-radius: 50%; overflow: hidden; margin: 0 auto;">
+            <img src="{{ seeker.pro_pic.url }}" alt="Profile Picture" style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle">
+        
+        </div>
+        <br> <br>
+        <!-- Add a "Download Resume" button -->
+        <a href="{{ seeker.resume.url }}" target="_blank" class="btn2" style="display: block; text-align: center;">  <i class="bi bi-file-earmark-person"></i></a>
+    </div>
+    
+    <div class="profile-box">
+        <h3>Profile Information</h3>
+        <table class="table table-striped">
+            <tbody>
+                <!-- Basic Information -->
+                <tr>
+                    <td><strong>First Name:</strong></td>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Last Name:</strong></td>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong></td>
+                    <td>{{ user.email }}</td>
+                </tr>
+    
+                <!-- Detailed Information -->
+                <tr>
+                    <td><strong>Date of Birth:</strong></td>
+                    <td>{{ seeker.dob|date:'Y-m-d' }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Gender:</strong></td>
+                    <td>{{ seeker.gender }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Location:</strong></td>
+                    <td>{{ seeker.loc }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Phone:</strong></td>
+                    <td>{{ seeker.phone }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Qualification:</strong></td>
+                    <td>{{ seeker.qual }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Other Qualification:</strong></td>
+                    <td>{{ seeker.oqual }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Skills:</strong></td>
+                    <td>{{ seeker.skills }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Work Experience:</strong></td>
+                    <td>{{ seeker.exp }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Aadhaar Number:</strong></td>
+                    <td>{{ seeker.aadhaar }}</td>
+                </tr>
+                <!-- Add rows for other detailed information here -->
+    
+
+    
+                <!-- Resume -->
+                <tr>
+                    <td><strong>Resume:</strong></td>
+                    <td>
+                        {% if seeker.resume %}
+                            <a href="{{ seeker.resume.url }}" target="_blank">View Resume</a>
+                        {% else %}
+                            No resume available
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/seekerupdate" class="btn btn-warning">Edit Info</a>
+    </div>
+    

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+    <!-- Material UI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mui/material@5.5.1/dist/css/mui.min.css" integrity="sha256-QHhf/GU+o2eRPA12pGbrST2fB0SCedI4E1/i+Uq1qfA=" crossorigin="anonymous">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+    <!-- Custom Styles -->
+ 
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+   
+    /* Add your custom styles here */
+
+    /* Button Styles */
+    .btn-primary {
+        background-color: #007a6c;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #005951;
+    }
+
+    /* Input Styles */
+    .form-control {
+        border: 1px solid #007a6c;
+    }
+
+    /* Other Styles */
+    body {
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #session2 {
+        background-color: black;
+        color: white;
+        padding: 10px 10px;
+        margin-right: 10px;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    #session:hover {
+        background-color: #007a6c;
+        color: white;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+        /* Add styling for the hamburger menu icon */
+    }
+
+    .profile-box {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .profile-box h3 {
+        margin-top: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .job-details {
+        width: 48%; /* Adjust as needed */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .company-details {
+        width: 48%; /* Adjust as needed */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .details-section h2 {
+        border-bottom: 2px solid #333;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+
+    
+
+    .details-section li {
+        margin-bottom: 10px;
+    }
+
+    .company-logo {
+        width: 500px;
+        height: 300px;
+        display: block;
+        margin: 0 auto;
+    }
+    .button-container {
+        margin-top: 20px;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+
+
+    {% include 'seekerhead.html' %}
+<div>
+  <main id="main">
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="ion ion-search"></i></a></li>
+          </ul>
+          <div class="search-element">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn" type="submit"><i class="ion ion-search"></i></button>
+          </div>
+        </form>
+        <ul class="navbar-nav navbar-right">
+            <li class="dropdown dropdown-list-toggle">
+                <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep">
+                    <i class="ion ion-ios-bell-outline"></i>
+                </a>
+                <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    <!-- Add notifications here -->
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
+                    <i class="ion ion-android-person d-lg-none"></i>
+                    <div class="d-sm-none d-lg-inline-block">{{ user.username }}
+                    <span id="more-details"><i class="ti-angle-down"></i></span> </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <ul>
+                        <li class="more-details">
+                            <a href="#"><i class="ti-user"></i>View Profile</a>
+                            <a href="#!"><i class="ti-settings"></i>Settings</a>
+                            <a href="/logout"><i class="ti-layout-sidebar-left"></i>Logout</a> <!-- Changed the logout link -->
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+      </nav>
+      <br> <br> <br> <br> <br> <br>     <br> <br> <br> <br>                     <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <body>
+        <div class="container">
+            <div class="job-details">
+                <h1>{{ job.title }}</h1>
+                <div class="button-container">
+                    <form method="post" action="{% url 'applyjob' job_id=job.job_id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-lg">Apply Now</button>
+                    </form>
+                </div>
+                
+                <!-- Job Details -->
+                <section class="details-section">
+                    
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <td>{{ job.get_type_display }}</td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            <td>{{ job.location }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{{ job.status }}</td>
+                        </tr>
+                        <tr>
+                            <th>Deadline</th>
+                            <td>{{ job.deadline|date:'Y-m-d' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ job.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Requirements</th>
+                            <td>{{ job.requirements }}</td>
+                        </tr>
+                        <tr>
+                            <th>Minimum Experience</th>
+                            <td>{{ job.minexp }}</td>
+                        </tr>
+                        <tr>
+                            <th>Minimum Salary</th>
+                            <td>{{ job.min_salary }} lakhs per annum</td>
+                        </tr>
+                        <tr>
+                            <th>Maximum Salary</th>
+                            <td>{{ job.max_salary }} lakhs per annum</td>
+                        </tr>
+                        <tr>
+                            <th>Mode</th>
+                            <td>{{ job.mode }}</td>
+                        </tr>
+                       
+                    </div>
+                        <!-- Add more job-related fields as needed -->
+                    </table>
+                </section>
+            </div>
+    
+            <!-- Company Details -->
+            <div class="company-details">
+                <section class="details-section">
+                    <h2>Posted By</h2>
+                    <img src="{{ job.pro_id.logo.url }}" alt="Company Logo" class="company-logo">
+                    
+                    <table>
+                        <tr>
+                            <th>Company Name</th>
+                            <td>{{ job.pro_id.cname }}</td>
+                        </tr>
+                        <tr>
+                            <th>CEO Name</th>
+                            <td>{{ job.pro_id.ceoname }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company Address</th>
+                            <td>{{ job.pro_id.caddress }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company Type</th>
+                            <td>{{ job.pro_id.get_ctype_display }}</td>
+                        </tr>
+                        <tr>
+                            <th>Other Company Type</th>
+                            <td>{{ job.pro_id.otherctype }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company Description</th>
+                            <td>{{ job.pro_id.cdescription }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company Phone</th>
+                            <td>{{ job.pro_id.cphone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company Website</th>
+                            <td>{{ job.pro_id.website }}</td>
+                        </tr>
+                        <tr>
+                            <th>No of Employees</th>
+                            <td>{{ job.pro_id.empno }}</td>
+                        </tr>
+                        <tr>
+                            <th>Founded Date</th>
+                            <td>{{ job.pro_id.fyear|date:'Y-m-d' }}</td>
+                        </tr>
+                        <!-- Add more company-related fields as needed -->
+                    </table>
+                </section>
+            </div>
+        </div>
+    </body>
+    </html>

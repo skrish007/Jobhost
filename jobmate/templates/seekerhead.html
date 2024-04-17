@@ -1,0 +1,84 @@
+
+
+
+<head>
+<style>
+  .logo{
+    padding:20px;
+  
+  }
+</style>
+</head>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo" id="badge">
+        <h1 style="font-family: 'Cinzel', serif; color: white;" onmouseover="this.style.color='#21cfaf'" onmouseout="this.style.color='white'"> <a href="/"></a>JobMate</h1>
+
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="home.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+      
+      <nav id="navbar" class="navbar">
+        <ul class="d-flex justify-content-between align-items-center">
+          <li class="d-flex justify-content-center"> <!-- Add the justify-content-center class -->
+            <form method="POST"  class="d-flex" action="{% url 'search-view2' %}">
+              {% csrf_token %}
+                <input type="search" class="form-control me-2" name="search_query" placeholder="Search Jobs" aria-label="Search" id="seltest">
+                <div class="input-group-append">
+                    <button class="btn btn-success" id="btn" type="submit">Search</button>
+                </div> <!-- Close the div here -->
+            </form>
+        
+          <div id="searchResults2"></div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link scrollto " href="userdash">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link scrollto" href="viewpostedjobs"> Jobs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link scrollto" href="applied_jobs"> Applied Jobs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link scrollto" id="seltest" href="companyview">Companies</a>
+      </li>
+        <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <span id="session">
+                
+                  <img src="{{  request.session.userimg }}" class="rounded-circle" style="height: 30px; width: 30px; object-fit: cover; margin-right: 5px;">
+                    {% if request.session.f_name %}
+                        {{ request.session.f_name }}
+                    {% elif request.user.username %}
+                        {{ request.user.username }}
+                    {% endif %}
+                </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li class="text-center">
+                  <img src="{{  request.session.userimg }}" class="rounded-circle" style="height: 120px; width: 120px; object-fit: cover; margin-bottom: 10px;">
+              </li>
+              <li><a href="seekerpro"><i class="bi bi-pencil-square"></i> My Profile</a></li>
+              <li><a href="view_saved_jobs"><i class="bi bi-heart-fill"></i> Saved Jobs</a></li>
+
+              <li><a href="changepw_seeker"><i class="bi bi-shield-lock"></i> Change Password</a></li>
+              <li><a href="add-review1"><i class="bi bi-star-half"></i> Add Review</a></li>
+
+              <li><a href="logout" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Sign Out</a></li>
+          </ul>
+          <script>
+            function logout() {
+              // Add your logout logic here, such as clearing session data
+              alert("You have been logged out.");
+            }
+          </script>
+        </li>
+    </ul>
+    </nav><!-- .navbar -->
+    
+    </div>
+    </div>
+  </header><!-- End Header -->

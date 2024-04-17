@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #21cfaf; /* Green color with opacity */
+        color: black;
+        #btn
+    {
+      background-color: #007a6c;
+    }
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  
+    }
+    .sidebar {
+      /* Your existing sidebar styles */
+      /* Make sure to set an initial position for the sidebar */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+  
+    .sidebar-open {
+      transform: translateX(0);
+    }
+  
+    .sidebar-toggle {
+      /* Add styling for the hamburger menu icon */
+    }
+    .profile-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+  }
+  
+  .profile-box h3 {
+      margin-top: 0;
+  }
+    
+</style>
+</head>
+<body>
+
+  {% include 'prohead.html' %}
+  <body>
+      <div class="container">
+          <div class="job-details">
+              {% for job in jobs %}
+                  <div class="row mb-4">
+                      <div class="col-md-4">
+                        <br> <br> <br>
+                          <h1></h1>
+  
+                          <!-- Job Details -->
+                          <section class="details-section">
+                              <h2 center>{{ job.title }}</h2>
+                              <table class="table table-bordered">
+                                  <tr>
+                                      <th>Type</th>
+                                      <td>{{ job.get_type_display }}</td>
+                                  </tr>
+                                  <tr>
+                                      <th>Location</th>
+                                      <td>{{ job.location }}</td>
+                                  </tr>
+                                  <tr>
+                                      <th>Status</th>
+                                      <td>
+                                          <button type="button" class="btn {% if job.status == 'Active' %}btn-success{% else %}btn-danger{% endif %}">
+                                              {{ job.status }}
+                                          </button>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Deadline</th>
+                                    <td>
+                                        <button type="button" class="btn btn-secondary">
+                                            {{ job.deadline|date:'F d, Y' }}
+                                        </button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>Minimum Salary</th>
+                                    <td>{{ job.min_salary }} lakhs per annum</td>
+                                </tr>
+                                <tr>
+                                    <th>Maximum Salary</th>
+                                    <td>{{ job.max_salary }} lakhs per annum</td>
+                                </tr>
+                                <tr>
+                                    <th>Mode</th>
+                                    <td>{{ job.mode }}</td>
+                                </tr>
+                              
+                                <tr> <td>
+                                    <div class="button-container">
+                                <a href="/edit_job/{{ job.job_id }}" class="btn btn-warning">Edit Job</a> </td>
+                                
+                                <td><form method="post" action="{% url 'delete_job_by_company' job_id=job.job_id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete Job</button>
+                                </form> </td> </tr>
+                            </table>
+                                <!-- View Applicants button in the second line centered 
+                                <div class="second-line-container">
+                                    <center>
+                                        <a href="{% url 'view_applicants' %}" class="btn btn-primary">View Applicants</a>
+                                    </center>
+                                </div>
+                                -->
+                            </div>
+                            
+        
+                            {% if forloop.last or forloop.counter|divisibleby:3 %}
+                                </div>{% endif %}
+                        </div>
+                    {% endfor %}
+        
+                    {% if not jobs %}
+                        <p>No  jobs found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </body>
+        
+        </html>

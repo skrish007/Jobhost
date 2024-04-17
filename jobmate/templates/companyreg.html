@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Sign Up</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+  <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    body {
+            background-color: #f8f9fa;
+        }
+
+        #reg {
+            max-width: 800px;;
+            margin: 0 auto;
+            padding: 80px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        /* Two-column layout */
+        .form-column {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .form-column .form-group {
+            flex-basis: calc(50% - 10px);
+        }
+
+        /* Center the submission portion */
+        #submitBtn {
+            background-color: #333; /* Default background color */
+            color: #fff; /* Default text color */
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s; /* Transition effect for background and text color changes */
+        }
+    
+        #submitBtn:hover {
+            background-color: #007A6C; /* Green background color on hover */
+            color: #FFFFFF; /* White text color on hover */
+        }
+      .form-check-input:checked {
+        background-color: #007a6c;
+        border-color: #007a6c;
+    }
+    
+   
+.error-field {
+    border: 1px solid red; 
+}
+.messages-container {
+    margin-bottom: 15px;
+  }
+  
+  .alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+  }
+
+  </style>
+
+<body>
+  <!-- ... your existing HTML content ... -->
+
+
+
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <h1 style="font-family: 'Cinzel', serif; color: white;" onmouseover="this.style.color='#21cfaf'" onmouseout="this.style.color='white'"><a href="index.html"></a>JobMate</h1>
+
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="home.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
+          <li><a class="nav-link scrollto" href="login">Already have an Account? Login</a></li>
+          <li><a class="nav-link scrollto" href="register">New Candidate? Sign Up</a></li>
+          <!--<li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+          
+          <li class="dropdown"><a href="#"><span>Register</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="register">New Candidate ?</a></li>
+              
+              </li>
+              <li><a href="register">New Job Provider ?</a></li>
+              
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+        <br>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+  
+  
+
+  <div class="container" id="reg">
+    <div class="bg white p-3">
+        <h2 style="text-align: center; font-weight: bold; color: black;">Connect Now </h2>
+            <br> <br>
+
+            {% if messages %}
+      <div class="messages-container">
+        {% for message in messages %}
+          <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form method="POST" class="was-validated" action="/companyreg" enctype="multipart/form-data" onsubmit="return validateForm();">
+        {% csrf_token %}
+        <div class="form-column">
+            <!-- Company Name -->
+            <div class="form-group">
+                <label class="form-label" for="cname">Company Name</label>
+                <input type="text" id="cname" name="cname" class="form-control" required onInput="validateCompanyName()">
+                <span id="cname_error" class="cname_error"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label class="form-label" for="email">E-mail</label>
+                <input type="email" id="email" name="email" class="form-control" required onInput="validateEmail()">
+                <span id="email_error" class="email_error"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required placeholder="Enter password" onInput="validatePassword()">
+                <span id="pwMsg" class="pwMsg"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required  onInput="validateConfirmPassword()">
+                <span id="confirm_password_error" class="confirm_password_error"></span>
+            </div>
+
+            <!-- Contact -->
+            <div class="form-group">
+                <label class="form-label" for="cphone">Contact</label>
+                <input type="tel" id="cphone" name="cphone" class="form-control" required maxlength="10"  onInput="validatePhone()">
+                <span id="phone_error" class="phone_error"></span>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label class="form-label" for="caddress">Address</label>
+                <input type="text" id="caddress" name="caddress" required class="form-control" style="height: 100px;" onInput="validateAddress()">
+                <span id="caddress_error" class="caddress_error"></span>
+            </div>
+
+            <!-- Company Type -->
+                  <!-- Company Type -->
+            <div class="form-group">
+        <label class="form-label" required for="ctype">Company Type</label>
+         <select id="ctype" name="ctype" class="form-select" required onchange="toggleOtherType()">
+        <option value="" selected disabled>Select</option>
+        <option value="it">IT</option>
+        <option value="automobile">Automobile</option>
+        <option value="sales_marketing">Sales/Marketing</option>
+        <option value="finance">Finance</option>
+        <option value="education">Education</option>
+        <option value="arts_design">Arts/Design</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="media_communication">Media/Communication</option>
+        <option value="other">Other (Please Specify)</option>
+        </select>
+        </div>
+  
+
+            <!-- Other Company Type (Hidden by default) -->
+            <div class="form-group" id="otherctype" style="display: none;">
+                <label class="form-label" for="otherctype">Specify Other </label>
+                <input type="text" id="other_company_type" name="other_company_type" class="form-control" placeholder="Specify other company type">
+            </div>
+            <script>
+                // Function to toggle the "Other Company Type" input field
+                function toggleOtherType() {
+                    const ctype = document.getElementById('ctype');
+                    const otherctype = document.getElementById('otherctype');
+            
+                    if (ctype.value === 'other') {
+                        otherctype.style.display = 'block';
+                    } else {
+                        otherctype.style.display = 'none';
+                    }
+                }
+            </script>
+            
+            <!-- About Company -->
+            <div class="form-group">
+                <label class="form-label" for="cdescription">About Company</label>
+                <input type="text" id="cdescription" required name="cdescription"  class="form-control"  style="height: 100px;" onInput="validateDescription()">
+                <span id="cdescription_error" class="cdescription_error"></span>
+            </div>
+
+            <!-- Company Location -->
+            <div class="form-group">
+                <label class="form-label" for="cloc">Company Location</label>
+                <input type="text" id="cloc" name="cloc" class="form-control" required onInput="validateLocation()">
+                <span id="cloc_error" class="cloc_error"></span>
+            </div>
+
+            <!-- Number of Employees -->
+            <div class="form-group">
+                <label class="form-label" for="empno">Number of Employees</label>
+                <input type="number" id="empno" name="empno" class="form-control" required onInput="validateEmployeeNumber()">
+                <span id="empno_error" class="empno_error"></span>
+            </div>
+
+            <!-- CEO Name -->
+            <div class="form-group">
+                <label class="form-label" for="ceoname">CEO Name</label>
+                <input type="text" id="ceoname" name="ceoname" class="form-control" required onInput="validateCeoName()">
+                <span id="ceoname_error" class="ceoname_error"></span>
+            </div>
+
+            <!-- License Number -->
+            <div class="form-group">
+                <label class="form-label" for="clicense">License Number</label>
+                <input type="text" id="clicense" name="clicense" class="form-control" required onInput="validateLicense()">
+                <span id="clicense_error" class="clicense_error"></span>
+            </div>
+
+            <!-- Started Date -->
+            <div class="form-group">
+                <label class="form-label" for="fyear">Started Date</label>
+                <input type="date" id="fyear" name="fyear" class="form-control" required onInput="validateDate()">
+                <span id="fyear_error" class="fyear_error"></span>
+            </div>
+
+            <!-- Official Website -->
+            <div class="form-group">
+                <label class="form-label" for="website">Official Website</label>
+                <input type="text" id="website" name="website" class="form-control" required onInput="validateURL()">
+                <span id="url_error" class="url_error"></span>
+            </div>
+
+            <!-- Upload Logo -->
+            <div class="form-group">
+                <label class="form-label" for="logo">Upload Logo</label>
+                <input type="file" id="logo" name="logo" class="form-control"  accept="image/jpg,application/pdf" onchange="validateFile()">
+                <span id="logo_error" class="logo_error"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="licensefile">Upload License File (PDF only)</label>
+                <input type="file" id="licensefile" required name="licensefile" class="form-control"  accept="application/pdf" >
+                <span id="licensefile_error" class="licensefile_error"></span>
+            </div>
+        </div>
+
+            <div class="form-group">
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" required id="agree" name="agree">
+                <label class="form-check-label" for="agree">
+                I agree to the <a href="#!">Terms of Service</a>
+            </label>
+            </div>
+        </div>
+
+            <!-- Submit Button -->
+            <!-- Centered submission portion -->
+        <!-- Centered submission portion -->
+<div style="text-align: center;">
+    <button type="submit" class="btn btn-dark btn-lg" id="submitBtn" disabled>Register</button>
+</div>
+
+
+
+            <script>
+    // Function to enable the submit button when the checkbox is checked
+            document.getElementById('agree').addEventListener('change', function () {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = !this.checked;
+    });
+</script>
+
+
+    <p><center> OR </p>
+    
+    <br>
+
+    
+          <a class="btn btn-outline-dark" href=""role="button" style="text-transform:none">
+            <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+            Login with Google
+          </a>
+        
+      
+
+    </form>
+</div>
+    <script>
+        function validateForm() {
+            const cname = document.getElementById('cname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const fyear = document.getElementById('fyear').value.trim();
+        const website = document.getElementById('website').value.trim();
+        const licensefile = document.getElementById('licensefile').value;
+        const cdescription = document.getElementById('cdescription').value.trim();
+        const cloc = document.getElementById('cloc').value.trim();
+        const ceoname = document.getElementById('ceoname').value.trim();
+        const clicense = document.getElementById('clicense').value.trim();
+        const address = document.getElementById('caddress').value.trim();
+
+        let isValid = true;
+
+        // Check if any of the fields is empty
+        if (
+            cname === "" ||
+            email === "" ||
+            phone === "" ||
+            password === "" ||
+            confirmPassword === "" ||
+            fyear === "" ||
+            website === "" ||
+            licensefile === "" ||
+            cdescription === "" ||
+            cloc === "" ||
+            ceoname === "" ||
+            clicense === "" ||
+            address === ""
+        ) {
+            isValid = false;
+            alert('Please fill in all the required fields.');
+        }
+
+        if (isValid) {
+            // All fields are filled, proceed with form submission
+            document.getElementById('myForm').submit();
+        }
+    }
+
+    
+
+            
+    function validateCompanyName() {
+    const cnameInput = document.getElementById('cname');
+    const cnameError = document.getElementById('cname_error');
+    const cname = cnameInput.value.trim();
+    let message = "";
+
+    if (cname === "") {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Company Name is required.';
+    } else if (cname.length < 3) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Company Name must be at least 3 characters long.';
+    
+    } else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    cnameError.innerHTML = message;
+}
+function validateEmail() {
+    const emailInput = document.getElementById('email');
+    const email = emailInput.value.trim();
+    const email_error = document.getElementById('email_error');
+
+    const allowedTlds = [
+        "com",
+        "in",
+        "ac",
+        "co",
+        "org",
+        "net",
+        "edu",
+        "gov",
+        // Add more allowed TLDs here
+    ];
+
+    const parts = email.split('@');
+    if (parts.length !== 2) {
+        // Email should have exactly one "@" symbol
+        const message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid email format';
+        email_error.innerHTML = message;
+        emailInput.value = email;
+        return;
+    }
+
+    const domain = parts[1];
+    const domainParts = domain.split('.');
+    if (domainParts.length < 2) {
+        // Domain should have at least one subdomain and one TLD
+        const message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid email domain';
+        email_error.innerHTML = message;
+        emailInput.value = email;
+        return;
+    }
+
+    const tld = domainParts.pop().toLowerCase();
+    if (!allowedTlds.includes(tld) || tld.length > 6 || /\.{2,}/.test(domain)) {
+        // Check if the TLD is in the allowed list, has a valid length (up to 6 characters), and no consecutive dots in the domain
+        const message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid or unsupported email domain';
+        email_error.innerHTML = message;
+        emailInput.value = email;
+        return;
+    }
+
+    let message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    email_error.innerHTML = message;
+    emailInput.value = email; // Remove leading/trailing spaces if any
+}
+
+
+// Validate phone number
+function validatePhone(phoneNumber) {
+    const phone_error = document.getElementById("phone_error");
+    let message = "";
+    const phoneRegex = /^[0-9]{10}$/.test(phoneNumber);
+
+    if (phoneNumber.length >= 10) {
+        document.getElementById("phone").value = phoneNumber.slice(0, 10);
+    }
+    if (!phoneRegex) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid phone number!';
+    } else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    phone_error.innerHTML = message;
+}
+
+// Validate password
+function validatePassword() {
+    const password = document.getElementById("password").value;
+    const pwMsg = document.getElementById("pwMsg");
+
+    const lengthValid = /.{8,20}/.test(password); // Corrected regex
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password);
+    const hasDigit = /[0-9]/.test(password);
+    const whiteSpace = /\s/.test(password);
+
+    let message = "";
+
+    if (!lengthValid) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Password must be 8 to 20 characters long.<br>';
+    }
+    if (password.length >= 20) {
+        document.getElementById("password").value = password.slice(0, 20);
+    }
+    if (!hasUpperCase) {
+        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one uppercase letter.<br>';
+    }
+    if (!hasLowerCase) {
+        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one lowercase letter.<br>';
+    }
+    if (!hasSpecialChar) {
+        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one special character.<br>';
+    }
+    if (!hasDigit) {
+        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one digit.<br>';
+    }
+    if (whiteSpace) {
+        message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must not contain any whitespace characters.';
+    }
+
+    pwMsg.innerHTML = message;
+
+    if (lengthValid && hasUpperCase && hasLowerCase && hasSpecialChar && hasDigit && !whiteSpace) {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i> Password is valid!';
+    }
+
+    pwMsg.innerHTML = message;
+}
+
+function validateConfirmPassword() {
+    const password = document.getElementById('password').value;
+    const confirm_password = document.getElementById('confirmPassword').value;
+    const confirm_password_error = document.getElementById('confirm_password_error');
+    let message = "";
+
+    if (confirm_password !== password) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Passwords do not match';
+    } else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i> Passwords matched';
+    }
+
+    confirm_password_error.innerHTML = message;
+}
+function validateDate() {
+    const dobInput = document.getElementById('fyear');
+    const dateError = document.getElementById('fyear_error');
+    const today = new Date();
+    let message = "";
+
+    const dobValue = dobInput.value.trim(); // Remove leading/trailing spaces
+
+    // Check if the date is empty or incomplete
+    if (!dobValue || dobValue.length < 10) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Please enter a complete date.';
+    } else {
+        const dob = new Date(dobValue);
+
+        
+
+        if (dob > today || dob.getFullYear() < 1800) {
+            message = '<i class="bi bi-x-circle-fill text-danger"></i> Please enter a relevant date.';
+        
+        } else {
+            message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+        }
+    }
+
+    dateError.innerHTML = message;
+    return message.includes('text-success');
+}
+// Validate phone number
+    function validatePhone() {
+        const phoneInput = document.getElementById('cphone');
+        const phoneError = document.getElementById('phone_error');
+        const phone = phoneInput.value.trim();
+        let message = "";
+
+        // Check if the phone number has less than 10 digits
+        if (phone.length < 10) {
+            message = '<i class="bi bi-x-circle-fill text-danger"></i> Contact Number must 10 digits.';
+        } else {
+            // Regular expression to check if the phone number starts with 9, 8, 7, or 6
+            const phoneRegex = /^[9876]\d{9}$/.test(phone);
+
+            if (!phoneRegex) {
+                message = '<i class="bi bi-x-circle-fill text-danger"></i> Please Enter a Valid Number. It must start with 9, 8, 7, or 6 .';
+            } else {
+                message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+            }
+        }
+
+        phoneError.innerHTML = message;
+    }
+
+
+
+function validateDescription() {
+    const descriptionInput = document.getElementById('cdescription');
+    const descriptionError = document.getElementById('cdescription_error');
+    const description = descriptionInput.value.trim();
+    let message = "";
+
+    if (description.length > 100) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> About Company must be 100 characters or less.';
+    } else if (description.length < 10){
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> About Company must be atleast 10 characters';
+       }   else{
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    descriptionError.innerHTML = message;
+}
+function validateAddress() {
+    const addressInput = document.getElementById('caddress');
+    const addressError = document.getElementById('caddress_error');
+    const address = addressInput.value.trim();
+    let message = "";
+
+    if (address.length < 10) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Address must be at least 10 characters long.';
+    } else if (address.length > 100) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Address cannot exceed 100 characters.';
+    } else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    addressError.innerHTML = message;
+}
+
+// Validate Company Location (mandatory)
+function validateLocation() {
+    const locationInput = document.getElementById('cloc');
+    const locationError = document.getElementById('cloc_error');
+    const location = locationInput.value.trim();
+    let message = "";
+
+    if (location === "") {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Company Location is required.';
+    } else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    locationError.innerHTML = message;
+}
+
+// Validate CEO Name (same logic as Company Name)
+function validateCeoName() {
+    const ceoNameInput = document.getElementById('ceoname');
+    const ceoNameError = document.getElementById('ceoname_error');
+    const ceoName = ceoNameInput.value.trim();
+    let message = "";
+
+    if (ceoName === "") {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> CEO Name is required.';
+    } else if (ceoName.length < 2) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> CEO Name must be at least 2 characters long.';
+    }  else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    ceoNameError.innerHTML = message;
+}
+
+// Validate License Number (mandatory and valid)
+function validateLicense() {
+    const licenseInput = document.getElementById('clicense');
+    const licenseError = document.getElementById('clicense_error');
+    const license = licenseInput.value.trim();
+    let message = "";
+
+    if (license.length < 4) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> License Number must be at least 4 characters long.';
+    } else if (!/^[A-Za-z0-9]+$/.test(license)) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> License Number must contain only letters and numbers.';
+    } else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    licenseError.innerHTML = message;
+}
+
+// Validate Logo File (PDF or Image)
+function validateFile() {
+    const logoInput = document.getElementById('logo');
+    const logoError = document.getElementById('logo_error');
+    const allowedExtensions = ['jpg','pdf'];
+    const fileName = logoInput.value.toLowerCase();
+    const fileExtension = fileName.split('.').pop();
+    let message = "";
+
+    if (!allowedExtensions.includes(fileExtension)) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Logo must be in PDF, JPG format.';
+    } else {
+        message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    logoError.innerHTML = message;
+    
+}
+    function validateFile() {
+        const licensefileInput = document.getElementById('licensefile');
+        const licensefileError = document.getElementById('licensefile_error');
+        const allowedExtensions = ['pdf']; // Allowed file extensions (PDF)
+
+        // Your validation logic here (as provided in the previous response)
+
+        return true; // Return true if the file is valid, false if invalid
+    }
+
+    // Attach the validateFile function to the file input's onchange event
+    document.getElementById('licensefile').addEventListener('change', validateFile);
+
+
+        
+
+    </script>
+    </body>
+</div>
+<!-- ======= Footer ======= -->
+{% include "footer.html" %}
+<!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+<link   rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+        crossorigin="anonymous">
+</script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+<!-- ======= Footer ======= -->
+{% include "footer.html" %}
+<!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+
+
+</html>

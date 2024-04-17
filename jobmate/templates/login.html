@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+{% load static %}
+{% load socialaccount %}
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #007A6C; /* Green color with opacity */
+        color: white;
+    }
+    .messages-container {
+      margin-bottom: 15px;
+    }
+    
+    .alert {
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    
+    .alert-success {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      color: #155724;
+    }
+    
+    .alert-danger {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+    }
+</style>
+</head>
+<body>
+  
+
+
+
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <h1 style="font-family: 'Cinzel', serif; color: white;" onmouseover="this.style.color='#21cfaf'" onmouseout="this.style.color='white'"><a href="index.html"></a>JobMate</h1>
+
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="home.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
+          <!--<li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+          <li><a class="nav-link scrollto" href="login">Login</a></li> -->
+          <li class="dropdown"><a href="#"><span>Register</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="register">New Candidate ?</a></li>
+              
+              </li>
+              <li><a href="companyreg">New Job Provider ?</a></li>
+              
+            </ul>
+          </li>
+          <!--<li><a class="nav-link scrollto" href="#contact">Contact</a></li>-->
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+        <br>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+  
+  <main id="main">
+  <section id="about" class="about">
+<div class="container">
+<br>
+<br>
+<br>
+<div class="row">
+  <!-- First Column -->
+  <div class="col-md-6">
+    
+          <img src="{% static 'assets/img/vectorall.jpg' %}" class="img-fluid" alt="" style="max-height: 600px; max-width: 600px;">
+          
+      
+  </div> 
+  
+  <!-- Second Column -->
+  <div class="col-md-5">
+    <div class="bg white p-3">
+      <h2 style="text-align: center; font-weight: bold; color: black;">Welcome Back!</h2>
+      <br>
+      {% if messages %}
+      <div class="messages-container">
+        {% for message in messages %}
+          <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+          
+        <form method="post"  action="{% url 'login' %}" onsubmit= "return validateForm()">
+          {% csrf_token %}
+          <!-- Email input with label above -->
+
+<div class="mb-4">
+  <label for="email">Email</label>
+  <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+      <input type="email" id="email" name="email" class="form-control" placeholder="Enter e-mail" onInput="validateEmail()">
+      <span id="email_error" class="email_error"></span>
+  </div>
+</div>
+
+<!-- Password input with label above -->
+<div class="mb-4">
+  <label for="password">Password</label>
+  <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-key"></i></span>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" onInput="validatePassword()">
+      <span id="pwMsg" class="pwMsg"></span>
+  </div>
+</div>
+
+
+          
+<div class="row mb-4">
+  <!-- "Login as Admin?" link aligned to the left -->
+  <div class="col text-left">
+      <a href="admin">Login as Admin?</a>
+  </div>
+  <!-- Spacer to push the "Forget Password?" link to the right -->
+  <div class="col text-right">
+      &nbsp;
+  </div>
+  <!-- "Forget Password?" link aligned to the right -->
+  <div class="col text-right">
+      <a href="{% url 'password_reset' %}" > Forget Password?</a>
+  </div>
+</div>
+
+          
+            <div class="text-center">
+              <button type="submit" id="testid" class="btn btn-dark btn-block mb-lg-4" style="font-size: 24px;">Login</button>
+            </div>
+            
+          
+            <!-- Register buttons -->
+            <div class="text-center">
+              <p>Not a member? <a href="register">Create a new Account</a></p>
+              <p>OR</p>
+              <p>Continue using</p>
+              
+              <a href="{% provider_login_url 'google' method='oauth2' %}">
+                <button type="button" class="btn btn-white btn-floating mx-3">
+                    <i class="bi bi-google" style="font-size: 26px;"></i>
+                </button>
+            </a>
+            
+              
+            
+          
+            <button type="button" class="btn btn-white btn-floating mx-3">
+              <i class="bi bi-twitter-x" style="font-size: 26px;"></i>
+          </button>
+          
+          <button type="button" class="btn btn-white btn-floating mx-3">
+            <i class="bi bi-instagram" style="font-size: 26px;"></i>
+        </button>
+          
+              <button type="button" class="btn btn-white btn-floating mx-3">
+                <i class="bi bi-github" style="font-size: 26px;"></i>
+              </button>
+
+            </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+</div>
+
+</section>
+<script>
+  function validateForm() {
+  }
+  function validateEmail() {
+    const email = document.getElementById('email').value;
+    const email_error = document.getElementById('email_error');
+
+    // Regular expression for a valid email address
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email);
+
+    // Regular expression to match unwanted characters (multiple dots or consecutive special characters)
+    const unwantedCharsPattern = /(\.\.|-{2,}|_+|@{2,})/.test(email);
+
+    // Additional rules
+    const rulesPassed =
+        email.length <= 3 || // Email should not be more than 3 characters
+        email.indexOf('@') !== -1 || // Email should contain exactly one '@' character
+        (email.split('@')[1] && email.split('@')[1].indexOf('.') !== -1); // There should be at least one dot after '@'
+
+    let message = "";
+
+    if (!emailPattern || unwantedCharsPattern || !rulesPassed) {
+        message = '<i class="bi bi-x-circle-fill text-danger"></i> Enter a valid email';
+    } else {
+      // message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+    }
+
+    email_error.innerHTML = message;
+}
+
+  </script
+
+
+  {% include "footer.html" %}
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,240 @@
+
+    <!DOCTYPE html>
+    {% load static %}
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>JLogin</title>
+      <meta content="" name="description">
+      <meta content="" name="keywords">
+      
+       <!-- Favicons -->
+       <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+       <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+      
+      <!-- Google Fonts -->
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+    
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+      
+      <!-- Vendor CSS Files -->
+      <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+      <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+      <!-- Bootstrap CSS -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Chart.js CDN -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <!-- Template Main CSS File -->
+      <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+      <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
+      <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-pie.min.js"></script>
+      <!-- =======================================================
+      * Template Name: JobMate
+      * Updated: Sep 18 2023 with Bootstrap v5.3.2
+      * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+      * Author: BootstrapMade.com
+      * License: https://bootstrapmade.com/license/
+      ======================================================== -->
+      <style>
+        /* Increase button size on hover */
+        .btn.btn-dark:hover {
+            transform: scale(1.05);
+        }
+        html, body, #container { 
+          width: 100%; height: 100%; margin: 0; padding: 0; 
+      } 
+    
+        /* Change button background color to green on hover */
+        .btn.btn-dark:hover {
+            background-color: #21cfaf; /* Green color with opacity */
+            color: black;
+            #btn
+        {
+          background-color: #007a6c;
+        }
+    
+        #session {
+          background-color: black;;
+          color: white;
+          padding: 10px 10px;
+          margin-right: 10px;
+          border-radius: 10px;
+          transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+      }
+    
+      #session:hover {
+          background-color: #007a6c; /* Change background color on hover */
+          color: white; /* Change text color on hover */
+      
+        }
+        .sidebar {
+          /* Your existing sidebar styles */
+          /* Make sure to set an initial position for the sidebar */
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+      
+        .sidebar-open {
+          transform: translateX(0);
+        }
+      
+        .sidebar-toggle {
+          /* Add styling for the hamburger menu icon */
+        }
+        .profile-box {
+          border: 1px solid #ddd;
+          padding: 20px;
+          margin: 20px 0;
+      }
+      
+      .profile-box h3 {
+          margin-top: 0;
+      }
+      
+    
+    .star-rating:hover {
+        color: gold;
+    }
+    
+    .rating-container {
+        margin-bottom: 20px;
+    }
+    
+    .comment-input {
+        width: 100%;
+        height: 120px; /* Increase textarea height */
+        margin-top: 10px;
+    }
+    
+    .comment-input {
+        width: 100%;
+        height: 80px;
+        margin-top: 10px;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .match-score {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .score-meter {
+        width: 200px;
+        height: 20px;
+        background-color: #ddd;
+        border-radius: 10px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .score-meter-fill {
+        height: 100%;
+        transition: width 1s ease-in-out;
+    }
+    .improvement {
+        color: #ff0000; /* Red */
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    </style>
+    </head>
+    
+    <body>
+      <div class="container mt-4">
+        <h1 class="text-center mb-4">Resume Screening Dashboard</h1>
+    
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title">Match Score</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Your resume's overall match score: {{ match_score|floatformat:2 }}</p>
+                        <!-- Donut Chart Canvas -->
+                        <canvas id="matchScoreChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title">Key Recommendations</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for recommendation in recommendations %}
+                                <li class="list-group-item">{{ recommendation }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const matchScore = parseFloat("{{ match_score|floatformat:2 }}");
+            const ctx = document.getElementById('matchScoreChart').getContext('2d');
+    
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Match Score'],
+                    datasets: [{
+                        data: [matchScore, 100 - matchScore], // Data for the donut chart
+                        backgroundColor: ['#8B0000', '#D3D3D3'], // Colors for the segments
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    cutout: '50%', // Size of the hole in the middle of the chart
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false },
+                        doughnutLabel: {
+                            labels: [{
+                                text: matchScore.toFixed(2),
+                                font: { size: 20 }
+                            }]
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    </body>
+    </html>
+    
+    
+        
+      {% include "seekerhead.html" %}
+    
+       
+        
+        
+        

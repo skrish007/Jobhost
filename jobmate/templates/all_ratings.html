@@ -1,0 +1,278 @@
+
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>                                      
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
+  <title>Admin Dashboard &mdash; </title>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link rel="stylesheet" href="{% static 'assetsss/modules/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assetsss/modules/ionicons/css/ionicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assetsss/modules/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'assetsss/modules/summernote/summernote-lite.css' %}">
+  <link rel="stylesheet" href="{% static 'assetsss/modules/flag-icon-css/css/flag-icon.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assetsss/css/demo.css' %}">
+  <link rel="stylesheet" href="{% static 'assetsss/css/style.css' %}">
+  <style>
+    #abc{
+        padding-top:20px;
+        font-weight:bold;
+    }
+    body {
+        background-image: url("{% static 'images/r6.jpg' %}");
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+      }
+    
+      .container {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+    
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+    
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+    
+      th {
+        background-color: #f2f2f2;
+      }
+    
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    
+      td:last-child {
+        text-align: center;
+      }
+    
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        table {
+          font-size: 12px;
+        }
+        th, td {
+          padding: 6px;
+        }
+      }
+    
+      @media (max-width: 576px) {
+        table {
+          font-size: 10px;
+        }
+        th, td {
+          padding: 4px;
+          border:5px;
+        }
+      }
+    
+      .btn-save {
+        background-color: #007a6c; /* Green color you prefer */
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    
+      .btn-save:hover {
+        background-color: #000000; /* Darker green color on hover */
+      }
+  </style>
+</head>
+
+<body>
+  <div class="main-sidebar">
+      <aside id="sidebar-wrapper">
+        <div class="sidebar-brand" id="abc">
+          <h1 style="font-family: 'Cinzel', serif; color: black;" onmouseover="this.style.color='#007a6c'" onmouseout="this.style.color='black'"><a href="index.html"></a>JobMate</h1>
+          <br>
+        </div>
+        <div class="sidebar-user">
+          <div class="sidebar-user-picture">
+              <img alt="image" src="{% static 'assetsss/img/avatar/avatar-1.jpeg' %}">
+          </div>
+          <div class="sidebar-user-username">{{ user.username }}</div>
+      
+          <div class="sidebar-user-details">
+            <div class="user-name"> {{ request.session.name }} </div>
+            <div class="user-role">
+                {{  request.session.email }}
+            </div>
+          </div>
+        </div>
+        <div class="p-3 mt-4 mb-4">
+            <button class="btn btn-primary btn-shadow btn-round has-icon has-icon-nofloat btn-block" onclick="searchCompaniesSidebar()">
+              <i class="ion ion-search"></i> <div>Search Companies</div>
+            </button>
+          </div>
+      </aside>
+  
+      <ul class="sidebar-menu">
+        <li class="menu-header">Dashboard</li>
+        <li class="active">
+          <a href="admindash"><i class="ion ion-speedometer"></i><span>Dashboard</span></a>
+        </li>
+
+        <li class="menu-header">Components</li>
+
+            <li>
+              <a href="companylist" class="has-dropdown"><i class="ion ion-flag"></i>View Companies</span></a>
+              
+              <a href="seekerlist" class="has-dropdown"><i class="ion ion-flag"></i><span>View Jobseekers</span></a>
+              <a href="all-ratings" class="has-dropdown"><i class="ion ion-flag"></i><span>View Reviews</span></a>
+
+            </li>
+        <div class="p-3 mt-4 mb-4">
+          <a href="/" class="btn btn-danger btn-shadow btn-round has-icon has-icon-nofloat btn-block">
+            <i class="ion ion-help-buoy"></i> <div>Log Out!</div>
+          </a>
+        </div>
+      </ul>
+      
+  </aside>
+</div>
+
+<div id="app">
+<div class="main-wrapper">
+  <div class="navbar-bg"></div>
+  <nav class="navbar navbar-expand-lg main-navbar">
+    <form class="form-inline mr-auto">
+      <ul class="navbar-nav mr-3">
+        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="ion ion-navicon-round"></i></a></li>
+        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="ion ion-search"></i></a></li>
+      </ul>
+      <!-- Search input in the main navbar -->
+      <div class="search-element">
+        <input class="form-control" type="search" placeholder="Search now" aria-label="Search" id="mainSearchInput">
+        <button class="btn" type="button" onclick="searchMain()"><i class="ion ion-search"></i></button>
+      </div>
+    </form>
+    <ul class="navbar-nav navbar-right">
+        <li class="dropdown dropdown-list-toggle">
+            <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep">
+                <i class="ion ion-ios-bell-outline"></i>
+            </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                <!-- Add notifications here -->
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
+                <i class="ion ion-android-person d-lg-none"></i>
+                <div class="d-sm-none d-lg-inline-block">{{ user.username }}
+                <span id="more-details"><i class="ti-angle-down"></i></span> </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <ul>
+                    <li class="more-details">
+                        <a href="#"><i class="ti-user"></i>View Profile</a>
+                        <a href="#!"><i class="ti-settings"></i>Settings</a>
+                        <a href="/logout"><i class="ti-layout-sidebar-left"></i>Logout</a> <!-- Changed the logout link -->
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+  </nav>
+  <br>
+  <br>
+  <br>
+  <br>
+<br>
+    
+<br>
+
+<br>
+
+  {% if ratings %}
+    <table class="table">
+        <thead>
+            <tr>
+              <th>User</th>
+                
+
+                <th>User</th>
+                <th>Title</th>
+                <th>Stars</th>
+                <th>Comment</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rating in ratings %}
+                <tr>
+                  <td>{{ rating.user.username }}</td>
+                    <td>{{ rating.user.username }}</td>
+                    <td>{{ rating.title }}</td>
+                    <td>{{ rating.stars }} stars</td>
+                    <td>{{ rating.comment }}</td>
+                    <td>{{ rating.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No ratings available.</p>
+{% endif %}
+
+
+
+  <!-- Include the necessary JavaScript libraries -->
+  <script src="{% static 'modules/jquery.min.js' %}"></script>
+  <script src="{% static 'modules/popper.js' %}"></script>
+  <script src="{% static 'modules/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'modules/nicescroll/jquery.nicescroll.min.js' %}"></script>
+  <script src="{% static 'modules/scroll-up-bar/dist/scroll-up-bar.min.js' %}"></script>
+  <script src="{% static 'js/sa-functions.js' %}"></script>
+
+  <script src="{% static 'modules/chart.min.js' %}"></script>
+  <script src="{% static 'modules/summernote/summernote-lite.js' %}"></script>
+
+  <!-- Initialize your JavaScript for dropdown menus and other functionality -->
+  <script src="{% static 'js/scripts.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+  <script src="{% static 'js/demo.js' %}"></script>
+  
+  <!-- JavaScript for fullscreen toggle -->
+  <script>
+    function toggleFullScreen() {
+      if ((document.fullscreenElement && document.fullscreenElement !== null) ||
+          (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullScreen) { // Chrome, Safari, and Opera
+          document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+  </script>
+</section>
+</div>
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #21cfaf; /* Green color with opacity */
+        color: black;
+        #btn
+    {
+      background-color: #007a6c;
+    }
+  
+    .custom-pagination .page-link {
+        color: #dc3545 !important; /* Custom text color */
+        background-color: #f8f9fa !important; /* Custom background color */
+        border-color: #dc3545 !important; /* Custom border color */
+    }
+
+    /* Custom pagination link hover style */
+    .custom-pagination .page-link:hover {
+        color: #fff !important; /* White text color on hover */
+        background-color: #dc3545 !important; /* Custom background color on hover */
+        border-color: #dc3545 !important; /* Custom border color on hover */
+    }
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  
+    }
+    .sidebar {
+      /* Your existing sidebar styles */
+      /* Make sure to set an initial position for the sidebar */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+  
+    .sidebar-open {
+      transform: translateX(0);
+    }
+  
+    .sidebar-toggle {
+      /* Add styling for the hamburger menu icon */
+    }
+    .profile-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+  }
+  
+  .profile-box h3 {
+      margin-top: 0;
+  }
+    
+</style>
+</head>
+<body>
+
+
+    {% include "prohead.html" %}
+    
+    <div class="main-content">
+        <section class="section">
+            <div class="container">
+                <br>
+                {% if messages %}
+                <div class="messages-container">
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <br><br>
+                <h1> <center>Applied Candidates </h1>    
+                    <br><br>
+                    <a href="{% url 'list_interviews' %}" class="btn btn-primary">Scheduled Interviews</a>
+                    
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <form method="GET" action="" class="mb-3">
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="search_name" class="form-control" placeholder="Search by name" aria-label="Search by name" value="{{ request.GET.search_name }}">
+                                        <select class="form-select" name="status">
+                                            <option value="">Filter by status</option>
+                                            <option value="All" {% if request.GET.status == 'All' %} selected {% endif %}>All</option>
+                                            <option value="Pending" {% if request.GET.status == 'Pending' %} selected {% endif %}>Pending</option>
+                                            <option value="Selected" {% if request.GET.status == 'Selected' %} selected {% endif %}>Selected</option>
+                                            <option value="Scheduled" {% if request.GET.status == 'Scheduled' %} selected {% endif %}>Scheduled</option>
+                                            <option value="Rejected" {% if request.GET.status == 'Rejected' %} selected {% endif %}>Rejected</option>
+                                        </select>
+                                        
+                                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                        <a class="btn btn-outline-secondary" href="?">Reset</a>
+                                    </div>
+                                </form>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                        </div>
+                    <div class="container">
+                        <div class="row" id="jobs-container">
+                            <div class="row">
+                                {% for job_title, applications in job_applications.items %}
+                                {% for application in applications %}
+                                
+                                
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <!-- Job Details -->
+                                                        <section class="details-section">
+                                                            <table class="table table-bordered">
+                                                                <tr>
+                                                                    <div class="container">
+                                                                        <center><img src="{{ application.seeker_id.pro_pic.url }}" class="rounded-circle"
+                                                                                    alt="Profile Image" style="height: 100px; width: 100px;"></center>
+                                                                    </div>
+                                                                </tr>
+                                                                <br>
+                                                                <tr>
+                                                                    <th scope="row">Name</th>
+                                                                    <td>{{ application.seeker_id.user.first_name }} {{ application.seeker_id.user.last_name }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Job Title</th>
+                                                                    <td>{{ application.job_id.title }}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Resume</th>
+                                                                    <td>
+                                                                        <center>
+                                                                            <a href="{{ application.seeker_id.resume.url }}" class="btn btn-dark"> View </a>
+                                                                            <a href="{{ application.seeker_id.resume.url }}" download>
+                                                                                <i class="btn btn-dark bi bi-cloud-download"></i> 
+                                                                            </a>
+                                                                        </center>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Applied On</th>
+                                                                    <td>{{ application.application_date|date:'F d, Y'}} </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Deadline</th>
+                                                                    <td>{{ application.job_id.deadline|date:'F d, Y'}} </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Status</th>
+                                                                    <td>
+                                                                        {% if application.status == "Pending" %}
+                                                                            <span class="badge bg-warning text-dark">{{ application.status }}</span>
+                                                                        {% elif application.status == "Selected" %}
+                                                                            <span class="badge bg-success">{{ application.status }}</span>
+                                                                        {% elif application.status == "Scheduled" %}
+                                                                            <span class="badge bg-info">{{ application.status }}</span>
+                                                                        {% else %}
+                                                                            <span class="badge bg-secondary">{{ application.status }}</span>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    
+                                                                    {% if application.status == "Scheduled" %}
+
+                                                                    <tr>
+                                                                        <th scope="row">Scheduled On</th>
+                                                                        <td> {{ interview.interview.scheduled_date |date:'F d, Y'}} </td>
+                                                                        </tr>
+                                                                        
+                                                                        {% endif %}
+                                                                       
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        
+                                                                        {% if application.status == 'Pending' %}
+                                                                        <div class="text-center">
+                                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#scheduleModal{{ application.id }}">
+                                                                                Schedule Interview
+                                                                            </button>
+                                                                        </div>
+                                                                        <br>
+                                                                        {% elif application.status == "Scheduled" %}
+                                                                            <div class="text-center">
+                                                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal{{ application.id }}"
+                                                                                        data-scheduled-date="{{ application.scheduled_date|date:'Y-m-d\TH:i' }}"
+                                                                                        data-mode="{{ application.mode }}"
+                                                                                        data-platform="{{ application.platform }}"
+                                                                                        data-link="{{ application.link }}"
+                                                                                        data-venue="{{ application.venue }}"
+                                                                                        data-notes="{{ application.notes }}"
+                                                                                        data-helpline="{{ application.helpline }}">
+                                                                                    Reschedule Interview
+                                                                                </button>
+                                                                                <br> <br>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        {% endif %}
+                                                                        {% if application.status != "Rejected" %}
+    <div class="text-center">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal{{ application.id }}">
+            Reject
+        </button>
+    </div>
+{% endif %}
+
+                                                                        
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                                <!-- Reject Modal -->
+                                                                <div class="modal fade" id="rejectModal{{ application.id }}" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel{{ application.id }}" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="rejectModalLabel{{ application.id }}">Reject Candidate</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                Are you sure you want to reject this candidate?
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                                <form action="{% url 'reject_candidate' application.id %}" method="POST">
+                                                                                    {% csrf_token %}
+                                                                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </section>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="scheduleModal{{ application.id }}" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel{{ application.id }}" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="scheduleModalLabel{{ application.id }}">Schedule Interview</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        {% csrf_token %}
+                                                                        <form id="scheduleForm{{ application.id }}" action="{% url 'schedule_interview' application.id %}" method="POST" onsubmit="return validateInterviewForm{{ application.id }}();">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="application_id" value="{{ application.id }}">
+                                                        
+                                                                            <label for="mode" class="form-label">Mode</label><br>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input mode-selection" type="radio" name="mode" id="offline{{ application.id }}" value="offline" checked onclick="toggleFields_{{ application.id }}('offline{{ application.id }}');">
+                                                                                <label class="form-check-label" for="offline{{ application.id }}">Offline</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input mode-selection" type="radio" name="mode" id="online{{ application.id }}" value="online" onclick="toggleFields_{{ application.id }}('online{{ application.id }}');">
+                                                                                <label class="form-check-label" for="online{{ application.id }}">Online</label>
+                                                                            </div>
+                                                        
+                                                                            <!-- Platform selection -->
+                                                                            <div class="mb-3 platform-link-fields" id="platformLinkFields{{ application.id }}" style="display: none;">
+                                                                                <label for="platform" class="form-label">Platform</label>
+                                                                                <select class="form-select" id="platform" name="platform">
+                                                                                    <option value="">Select Platform</option>
+                                                                                    <option value="Zoom">Zoom</option>
+                                                                                    <option value="Google Meet">Google Meet</option>
+                                                                                    <option value="Microsoft Teams">Microsoft Teams</option>
+                                                                                </select>
+                                                                                <div id="platform_error{{ application.id }}" class="invalid-feedback"></div>
+                                                                            </div>
+                                                        
+                                                                            <!-- Link input -->
+                                                                            <div class="mb-3 platform-link-fields" id="linkFields{{ application.id }}" style="display: none;">
+                                                                                <label for="link" class="form-label">Link</label>
+                                                                                <input type="text" class="form-control" id="link" name="link">
+                                                                                <div id="link_error{{ application.id }}" class="invalid-feedback"></div>
+                                                                            </div>
+                                                        
+                                                                            <!-- Venue input -->
+                                                                            <div class="mb-3" id="venueField{{ application.id }}" style="display: none;">
+                                                                                <label for="venue" class="form-label">Venue</label>
+                                                                                <input type="text" class="form-control" id="venue{{ application.id }}" name="venue" oninput="validateVenue2{{ application.id }}();">
+                                                                                <span id="venue_error{{ application.id }}" class="text-danger" style="display: none;"></span>
+                                                                            </div>
+                                                        
+                                                                            <!-- Date and time input -->
+                                                                            <div class="mb-3">
+                                                                                <label for="datetime" class="form-label">Date and Time</label>
+                                                                                <input type="datetime-local" class="form-control" id="datetime" name="datetime" oninput="validateDate2{{ application.id }}(this.value)">
+                                                                                <span id="datetime_error{{ application.id }}" class="text-danger"></span>
+                                                                                <span id="datetime_msg{{ application.id }}" class="text-success"></span>
+                                                                            </div>
+                                                        
+                                                                            <!-- Notes textarea -->
+                                                                            <div class="mb-3">
+                                                                                <label for="notes" class="form-label">Notes</label>
+                                                                                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                                                                            </div>
+                                                        
+                                                                            <!-- Helpline input -->
+                                                                            <div class="mb-3">
+                                                                                <label for="helpline" class="form-label">Helpline</label>
+                                                                                <input type="text" class="form-control" id="helpline" name="helpline" oninput="validateHelpline2{{ application.id }}(this.value)">
+                                                                                <span id="helpline_error{{ application.id }}" class="text-danger"></span>
+                                                                                <span id="helpline_msg{{ application.id }}" class="text-success"></span>
+                                                                            </div>
+                                                        
+                                                                            <!-- Submit button -->
+                                                                            <button type="submit" id="submitButton{{ application.id }}" class="btn btn-dark" disabled>Schedule</button>
+                                                        
+                                                                            <!-- Success message -->
+                                                                            <span id="successMsg{{ application.id }}" class="text-success" style="display: none;"></span>
+                                                                        </form>
+                                                                    </div>
+                                                        
+                                                                    <script>
+                                                                        function toggleFields_{{ application.id }}(id) {
+                                                                            const offlineField = document.querySelector(`#venueField{{ application.id }}`);
+                                                                            const platformLinkFields = document.querySelectorAll('.platform-link-fields');
+                                                        
+                                                                            if (document.getElementById(`offline{{ application.id }}`).checked) {
+                                                                                offlineField.style.display = 'block';
+                                                                                platformLinkFields.forEach(field => {
+                                                                                    field.style.display = 'none';
+                                                                                });
+                                                                            } else {
+                                                                                offlineField.style.display = 'none';
+                                                                                platformLinkFields.forEach(field => {
+                                                                                    field.style.display = 'block';
+                                                                                });
+                                                                            }
+                                                                        }
+                                                        
+                                                                       
+                                                        
+                                                                        function validateDate2{{ application.id }}(dateValue) {
+                                                                            var currentDate = new Date();
+                                                                            var selectedDate = new Date(dateValue);
+                                                                            var twoMonthsLater = new Date();
+                                                                            twoMonthsLater.setMonth(currentDate.getMonth() + 2);
+                                                                        
+                                                                            if (isNaN(selectedDate.getTime())) {
+                                                                                // Invalid date format
+                                                                                document.getElementById('datetime_error{{ application.id }}').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Invalid DATE format.';
+                                                                                document.getElementById('datetime_msg{{ application.id }}').innerHTML = '';
+                                                                                enableSubmitButton('{{ application.id }}');
+                                                                                return false;
+                                                                            }
+                                                                        
+                                                                            if (selectedDate < currentDate) {
+                                                                                // Date is in the past
+                                                                                document.getElementById('datetime_error{{ application.id }}').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Date should not be in the past.';
+                                                                                document.getElementById('datetime_msg{{ application.id }}').innerHTML = '';
+                                                                                enableSubmitButton('{{ application.id }}');
+                                                                                return false;
+                                                                            }
+                                                                        
+                                                                            if (selectedDate > twoMonthsLater) {
+                                                                                // Date is more than 2 months in the future
+                                                                                document.getElementById('datetime_error{{ application.id }}').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Date should not be more than 2 months in the future.';
+                                                                                document.getElementById('datetime_msg{{ application.id }}').innerHTML = '';
+                                                                                enableSubmitButton('{{ application.id }}');
+                                                                                return false;
+                                                                            }
+                                                                        
+                                                                            // Check if year has more than 4 digits
+                                                                            var year = selectedDate.getFullYear().toString();
+                                                                            if (year.length > 4) {
+                                                                                document.getElementById('datetime_error{{ application.id }}').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Invalid year format.';
+                                                                                document.getElementById('datetime_msg{{ application.id }}').innerHTML = '';
+                                                                                enableSubmitButton('{{ application.id }}');
+                                                                                return false;
+                                                                            }
+                                                                        
+                                                                            // Valid date
+                                                                            document.getElementById('datetime_error{{ application.id }}').innerHTML = '';
+                                                                            document.getElementById('datetime_msg{{ application.id }}').innerHTML = '<i class="bi bi-check-circle"></i> Date is valid.';
+                                                                            enableSubmitButton('{{ application.id }}');
+                                                                            return true;
+                                                                        }
+                                                                        
+                                                                        function validateHelpline2{{ application.id }}(helplineValue) {
+                                                                            var helplineErrorMsg = [];
+                                                                        
+                                                                            if (helplineValue.length !== 10) {
+                                                                                helplineErrorMsg.push('Helpline number should be 10 digits.');
+                                                                            }
+                                                                        
+                                                                            if (!/^[6-9]/.test(helplineValue)) {
+                                                                                helplineErrorMsg.push('Helpline number should start with 6, 7, 8, or 9.');
+                                                                            }
+                                                                        
+                                                                            if (!/^\d+$/.test(helplineValue)) {
+                                                                                helplineErrorMsg.push('Helpline number should contain only digits.');
+                                                                            }
+                                                                        
+                                                                            var errorMessage = helplineErrorMsg.join('<br>');
+                                                                            var helplineError = document.getElementById('helpline_error{{ application.id }}');
+                                                                            var helplineMsg = document.getElementById('helpline_msg{{ application.id }}');
+                                                                            helplineError.innerHTML = errorMessage;
+                                                                        
+                                                                            if (errorMessage) {
+                                                                                helplineMsg.innerHTML = '';
+                                                                                helplineError.classList.add('text-danger');
+                                                                                helplineMsg.classList.remove('text-success');
+                                                                            } else {
+                                                                                helplineMsg.innerHTML = '<i class="bi bi-check-circle"></i> Helpline is valid.';
+                                                                                helplineError.classList.remove('text-danger');
+                                                                                helplineMsg.classList.add('text-success');
+                                                                            }
+                                                                        
+                                                                            enableSubmitButton('{{ application.id }}');
+                                                                            return errorMessage.length === 0;
+                                                                        }
+                                                                        
+                                                                       
+                                                                        
+                                                                        function enableSubmitButton(applicationId) {
+                                                                            var submitButton = document.getElementById('submitButton' + applicationId);
+                                                                            var dateTimeError = document.getElementById('datetime_error' + applicationId);
+                                                                            var helplineError = document.getElementById('helpline_error' + applicationId);
+                                                                        
+                                                                            if (dateTimeError.innerHTML === '' && helplineError.innerHTML === '') {
+                                                                                submitButton.removeAttribute('disabled');
+                                                                                document.getElementById('successMsg' + applicationId).style.display = 'block';
+                                                                            } else {
+                                                                                submitButton.setAttribute('disabled', 'disabled');
+                                                                                document.getElementById('successMsg' + applicationId).style.display = 'none';
+                                                                            }
+                                                                        }
+                                                                       
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    
+                                                        <div class="modal fade" id="editModal{{ application.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ application.id }}" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="editModalLabel{{ application.id }}">Reschedule Interview</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form id="editForm{{ application.id }}" action="{% url 'edit_interview' application.id %}" method="POST" onsubmit="return validateEditForm('{{ application.id }}');">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="application_id" value="{{ application.id }}">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label">Mode</label><br>
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <input class="form-check-input" type="radio" name="mode" id="editModeOnline" value="Online" {% if application.mode == 'Online' %} checked {% endif %}>
+                                                                                    <label class="form-check-label" for="editModeOnline">Online</label>
+                                                                                </div>
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <input class="form-check-input" type="radio" name="mode" id="editModeOffline" value="Offline" {% if application.mode == 'Offline' %} checked {% endif %}>
+                                                                                    <label class="form-check-label" for="editModeOffline">Offline</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mb-3" id="platformField" style="display: {% if application.mode == 'Online' %} block {% else %} none {% endif %}">
+                                                                                <label for="editPlatform" class="form-label">New Platform</label>
+                                                                                <select class="form-select" id="editPlatform" name="platform">
+                                                                                    <option value="">Select Platform</option>
+                                                                                    <option value="Zoom" {% if application.platform == 'Zoom' %} selected {% endif %}>Zoom</option>
+                                                                                    <option value="Google Meet" {% if application.platform == 'Google Meet' %} selected {% endif %}>Google Meet</option>
+                                                                                    <option value="Microsoft Teams" {% if application.platform == 'Microsoft Teams' %} selected {% endif %}>Microsoft Teams</option>
+                                                                                </select>
+                                                                                <span id="platform_error" class="text-danger"></span>
+                                                                            </div>
+                                                        
+                                                                            <div class="mb-3" id="linkField" style="display: {% if application.mode == 'Online' %} block {% else %} none {% endif %}">
+                                                                                <label for="editLink" class="form-label">New Link</label>
+                                                                                <input type="text" class="form-control" id="editLink" name="link" value="">
+                                                                                <span id="link_error" class="text-danger"></span>
+                                                                            </div>
+                                                                            <div class="mb-3" id="venueField" style="display: {% if application.mode == 'Offline' %} block {% else %} none {% endif %}">
+                                                                                <label for="editVenue" class="form-label">New Venue</label>
+                                                                                <input type="text" class="form-control" id="editVenue" name="venue" value="">
+                                                                                <span id="venue_error" class="text-danger"></span>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label for="editDatetime" class="form-label">New Date and Time</label>
+                                                                                <input type="datetime-local" class="form-control" id="editDatetime" name="datetime" value="" oninput="validateDate(this.value)">
+                                                                                <span id="datetime_error" class="text-danger"></span>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label for="editNotes" class="form-label">New Notes</label>
+                                                                                <textarea class="form-control" id="editNotes" name="notes" rows="3"></textarea>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label for="editHelpline" class="form-label">New Helpline</label>
+                                                                                <input type="text" class="form-control" id="editHelpline" name="helpline" value="" oninput="validateHelpline(this.value)">
+                                                                                <span id="helpline_error" class="text-danger"></span>
+                                                                            </div>
+                                                        
+                                                                            <button type="submit"  class="btn btn-dark" >Update</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                        {% endfor %}
+                                    
+                                {% endfor %}
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                   
+                 
+                        
+                     
+                    
+            <div id="pagination-container">
+                <ul class="pagination justify-content-center custom-pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       
+      
+        $(document).ready(function () {
+            var currentPage = 1;
+            var pageSize = 6;
+            var totalJobs = $(".job-card").length;
+            var totalPages = Math.ceil(totalJobs / pageSize);
+    
+            function showPage(pageNumber) {
+                $(".job-card").hide();
+                $(".job-card").slice((pageNumber - 1) * pageSize, pageNumber * pageSize).show();
+            }
+    
+            function renderPagination() {
+                $("#pagination-container").empty();
+                var paginationHtml = '<ul class="pagination justify-content-center">';
+                paginationHtml += '<li class="page-item" id="previous-page"><a class="page-link" href="#">Previous</a></li>';
+                for (var i = 1; i <= totalPages; i++) {
+                    paginationHtml += '<li class="page-item"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>';
+                }
+                paginationHtml += '<li class="page-item" id="next-page"><a class="page-link" href="#">Next</a></li>';
+                paginationHtml += '</ul>';
+                $("#pagination-container").html(paginationHtml);
+            }
+    
+            showPage(currentPage);
+            renderPagination();
+    
+            $(document).on("click", ".page-link", function (e) {
+                e.preventDefault();
+                var page = parseInt($(this).data("page"));
+                if (!isNaN(page) && page >= 1 && page <= totalPages) {
+                    currentPage = page;
+                    showPage(currentPage);
+                }
+            });
+    
+            $("#next-page").on("click", function () {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            });
+    
+            $("#previous-page").on("click", function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            });
+        });
+    </script>
+    
+                                                    
+                                                        <script>
+                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                            var onlineMode = document.getElementById('editModeOnline');
+                                                            var offlineMode = document.getElementById('editModeOffline');
+                                                            var platformField = document.getElementById('platformField');
+                                                            var linkField = document.getElementById('linkField');
+                                                            var venueField = document.getElementById('venueField');
+                                                        
+                                                            function toggleFields2(mode) {
+                                                                if (mode === 'Online') {
+                                                                    platformField.style.display = 'block';
+                                                                    linkField.style.display = 'block';
+                                                                    venueField.style.display = 'none';
+                                                                    // Clear the venue field if it's displayed
+                                                                    document.getElementById('editVenue').value = '';
+                                                                } else {
+                                                                    platformField.style.display = 'none';
+                                                                    linkField.style.display = 'none';
+                                                                    venueField.style.display = 'block';
+                                                                    // Clear the platform and link fields if they're displayed
+                                                                    document.getElementById('editPlatform').value = '';
+                                                                    document.getElementById('editLink').value = '';
+                                                                }
+                                                            }
+                                                        
+                                                            // Modify the event listeners to pass the current value of the radio button
+                                                            onlineMode.addEventListener('change', function() {
+                                                                toggleFields2(this.value);
+                                                            });
+                                                            offlineMode.addEventListener('change', function() {
+                                                                toggleFields2(this.value);
+                                                            });
+                                                        
+                                                            // Call the function initially to set the correct visibility based on the initial mode
+                                                            toggleFields2(onlineMode.checked ? 'Online' : 'Offline');
+                                                        });
+
+                                                        
+                                                        function validateDate(dateValue) {
+                                                            var currentDate = new Date();
+                                                            var selectedDate = new Date(dateValue);
+                                                            var twoMonthsLater = new Date();
+                                                            twoMonthsLater.setMonth(currentDate.getMonth() + 2);
+                                                    
+                                                            if (isNaN(selectedDate.getTime())) {
+                                                                document.getElementById('datetime_error').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Invalid date format.';
+                                                                document.getElementById('datetime_error').classList.remove('text-success');
+                                                                document.getElementById('datetime_error').classList.add('text-danger');
+                                                                enableUpdateButton();
+                                                                return false;
+                                                            }
+                                                    
+                                                            if (selectedDate < currentDate) {
+                                                                document.getElementById('datetime_error').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Date should not be in the past.';
+                                                                document.getElementById('datetime_error').classList.remove('text-success');
+                                                                document.getElementById('datetime_error').classList.add('text-danger');
+                                                                enableUpdateButton();
+                                                                return false;
+                                                            } else if (selectedDate > twoMonthsLater) {
+                                                                document.getElementById('datetime_error').innerHTML = '<i class="bi bi-exclamation-triangle"></i> Date should not be more than 2 months in the future.';
+                                                                document.getElementById('datetime_error').classList.remove('text-success');
+                                                                document.getElementById('datetime_error').classList.add('text-danger');
+                                                                enableUpdateButton();
+                                                                return false;
+                                                            } else {
+                                                                document.getElementById('datetime_error').innerHTML = '<i class="bi bi-check-circle"></i> Date is valid.';
+                                                                document.getElementById('datetime_error').classList.remove('text-danger');
+                                                                document.getElementById('datetime_error').classList.add('text-success');
+                                                                enableUpdateButton();
+                                                                return true;
+                                                            }
+                                                        }
+                                                    
+                                                        function validateHelpline(helplineValue) {
+                                                            var helplineErrorMsg = [];
+                                                    
+                                                            if (helplineValue.length !== 10) {
+                                                                helplineErrorMsg.push('Helpline number should be 10 digits.');
+                                                            }
+                                                    
+                                                            if (!/^[6-9]/.test(helplineValue)) {
+                                                                helplineErrorMsg.push('Helpline number should start with 6, 7, 8, or 9.');
+                                                            }
+                                                    
+                                                            if (!/^\d+$/.test(helplineValue)) {
+                                                                helplineErrorMsg.push('Helpline number should contain only digits.');
+                                                            }
+                                                    
+                                                            var errorMessage = helplineErrorMsg.join('<br>');
+                                                            var errorElement = document.getElementById('helpline_error');
+                                                            errorElement.innerHTML = errorMessage || '<i class="bi bi-check-circle"></i> Helpline is valid.';
+                                                    
+                                                            if (errorMessage) {
+                                                                errorElement.classList.remove('text-success');
+                                                                errorElement.classList.add('text-danger');
+                                                                enableUpdateButton();
+                                                            } else {
+                                                                errorElement.classList.remove('text-danger');
+                                                                errorElement.classList.add('text-success');
+                                                                enableUpdateButton();
+                                                            }
+                                                    
+                                                            return helplineErrorMsg.length === 0;
+                                                        }
+                                                    
+                                                        function enableUpdateButton() {
+                                                            var updateButton = document.querySelector('button[type="submit"]');
+                                                            var dateTimeError = document.getElementById('datetime_error').classList.contains('text-danger');
+                                                            var helplineError = document.getElementById('helpline_error').classList.contains('text-danger');
+                                                            var dateTimeSuccess = document.getElementById('datetime_error').classList.contains('text-success');
+                                                            var helplineSuccess = document.getElementById('helpline_error').classList.contains('text-success');
+                                                        
+                                                            if (!dateTimeError && !helplineError && (dateTimeSuccess || helplineSuccess)) {
+                                                                updateButton.removeAttribute('disabled');
+                                                            } else {
+                                                                updateButton.setAttribute('disabled', 'disabled');
+                                                            }
+                                                        }
+                                                        
+                                                        // Call the enableUpdateButton function whenever there is a change in the form inputs
+                                                        document.getElementById('editDatetime').addEventListener('input', enableUpdateButton);
+                                                        document.getElementById('editHelpline').addEventListener('input', enableUpdateButton);
+                                                        
+                                                    
+                                                        function validateEditForm(applicationId) {
+                                                            var dateTimeValue = document.getElementById('editDatetime').value;
+                                                            var helplineValue = document.getElementById('editHelpline').value;
+                                                    
+                                                            return validateDate(dateTimeValue) && validateHelpline(helplineValue);
+                                                        }
+                                                    </script>                                      
+                                                        
+                                        
+                                      
+                                                     
+                                        
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+    </html>
+    
+   
+
+
+
+
+
+
+
+
+

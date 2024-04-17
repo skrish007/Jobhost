@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Sign Up</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+  <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    body {
+            background-color: #f8f9fa;
+        }
+
+        #reg {
+            max-width: 800px;;
+            margin: 0 auto;
+            padding: 80px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        /* Two-column layout */
+        .form-column {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .form-column .form-group {
+            flex-basis: calc(50% - 10px);
+        }
+
+        /* Center the submission portion */
+        #submitBtn {
+            background-color: #333; /* Default background color */
+            color: #fff; /* Default text color */
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s; /* Transition effect for background and text color changes */
+        }
+    
+        #submitBtn:hover {
+            background-color: #007A6C; /* Green background color on hover */
+            color: #FFFFFF; /* White text color on hover */
+        }
+      .form-check-input:checked {
+        background-color: #007a6c;
+        border-color: #007a6c;
+    }
+    
+   
+.error-field {
+    border: 1px solid red; 
+}
+
+    /* Style for the container */
+ .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+    /* Style for the form section */
+    .form-section {
+        width: 50%; /* Take up the right half of the page */
+    }
+
+    /* Style for the image section */
+    .image-section {
+        width: 50%; /* Take up the left half of the page */
+    }
+
+    /* Style for the image (you can set a specific width and height) */
+    
+</style>
+ 
+
+
+
+
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between">
+
+      <div class="logo">
+        <h1 style="font-family: 'Cinzel', serif; color: white;" onmouseover="this.style.color='#21cfaf'" onmouseout="this.style.color='white'"><a href="index.html"></a>JobMate</h1>
+
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="home.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
+          <li><a class="nav-link scrollto" href="login">Already have an Account? Login</a></li>
+          <li><a class="nav-link scrollto" href="register">New Candidate? Sign Up</a></li>
+          <!--<li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+          
+          <li class="dropdown"><a href="#"><span>Register</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="register">New Candidate ?</a></li>
+              
+              </li>
+              <li><a href="register">New Job Provider ?</a></li>
+              
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+        <br>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+<body>
+    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    <div style="border: 1px solid #ccc; padding: 20px; text-align: center; width: 300px; margin: auto;">
+        <h2>Email Verification</h2>
+    
+        <form method="post" action="{% url 'verifymail' %}" id="otpForm">
+            {% csrf_token %}
+            <label for="verification_code">Enter Verification Code:</label>
+            <input type="text" placeholder="OTP" name="verification_code" required>
+            <button type="submit" id="verifyButton">Verify</button>
+        </form>
+    
+        <p id="countdown"></p>
+    
+        
+    </div>
+    
+    <script>
+        // JavaScript logic for countdown
+        const countdownElement = document.getElementById('countdown');
+        const verifyButton = document.getElementById('verifyButton');
+        let countdownValue = 120; // Set the initial countdown value in seconds (2 minutes)
+    
+        function updateCountdown() {
+            const minutes = Math.floor(countdownValue / 60);
+            const seconds = countdownValue % 60;
+            countdownElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+    
+        function startCountdown() {
+            updateCountdown();
+            const countdownInterval = setInterval(function () {
+                if (countdownValue > 0) {
+                    countdownValue -= 1;
+                    updateCountdown();
+                } else {
+                    clearInterval(countdownInterval);
+                    verifyButton.disabled = true; // Disable the Verify button after the countdown expires
+                    countdownElement.textContent = 'Verification code expired';
+                }
+            }, 1000);
+        }
+    
+        // Start the countdown when the page loads
+        startCountdown();
+    
+        // Prevent form resubmission on page reload
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+    

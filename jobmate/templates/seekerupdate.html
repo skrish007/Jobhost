@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #007a6c; /* Green color with opacity */
+        color: black;
+    }
+    #btn
+    {
+      background-color: #007a6c;
+    }
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover,.btn2:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  }
+  .container2 {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.profile-box h3 {
+    margin-top: 0;
+}
+
+.table td {
+    padding: 10px;
+}
+.btn2{
+    background-color:#DC3545;
+    margin:auto;
+    padding:25px;
+    border-radius: 10px;
+    font-weight:bold;
+
+    font-family:Lato;
+    color:white;
+   
+}
+</style>
+</head>
+
+
+
+
+
+  
+{% include 'seekerhead.html' %}
+  
+  <div class="container2">
+    <h1>My Profile</h1>
+
+    <!-- First Box: Basic Information -->
+    <div class="profile-box">
+        <div class="profile-picture" style="width: 250px; height: 250px; border: 5px solid #007a6c; border-radius: 50%; overflow: hidden; margin: 0 auto;">
+            <img src="{{ seeker.pro_pic.url }}" alt="Profile Picture" style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle">
+        
+        </div>
+        <br> <br>
+        <!-- Add a "Download Resume" button -->
+        <a href="{{ seeker.resume.url }}" target="_blank" class="btn2" style="display: block; text-align: center;">  <i class="bi bi-file-earmark-person"></i></a>
+    </div>
+    
+    <div class="profile-box">
+        <h3>Profile Information</h3>
+        <form method="POST" action="seekerupdate" enctype="multipart/form-data" onsubmit= "return validateForm();">
+            {% csrf_token %}
+               
+                  <div class="form-group">
+                      <label class="form-label" for="first_name">First Name</label>
+                      <input type="text" id="first_name" name="first_name" class="form-control" value="{{ user.first_name }}"placeholder="First Name" onInput="validatefname(this.value)">
+                      <span id="fname_error" class="fname_error"></span>
+                  </div>
+      
+                  <div class="form-group">
+                      <label class="form-label" for="last_name">Last Name</label>
+                      <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="form-control" placeholder="Last name" onInput="validatelname(this.value)">
+                      <span id="lname_error" class="lname_error"></span>
+                  </div>
+      
+                  <div class="form-group">
+                      <label class="form-label" for="email">E-mail</label>
+                      <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" placeholder="Enter e-mail" onInput="validateEmail()">
+                      <span id="email_error" class="email_error"></span>
+                  </div>
+      
+                  
+                  <div class="form-group">
+                      <label class="form-label" for="dob">Date of Birth</label>
+                      <input type="date" id="dob" class name="dob" class="form-control"value="{{ seeker.dob|date:'Y-m-d' }}" onInput="validateDate()">
+                      <span id="date_error" class="date_error"></span>
+                  </div>
+      <br>
+                   
+                      <label class="form-label" style="margin-right: 100px","margin-bottom: 100px","margin-top: 100px;">Gender</label>
+                      <div class="form-check form-check-inline" style="margin-right: 50px;">
+                          <input class="form-check-input" type="radio" name="gender" id="male" value="{{ seeker.gender }}" class>
+                          <label class="form-check-label" for="male">Male</label>
+                      </div>
+                      <div class="form-check form-check-inline" style="margin-right: 50px;">
+                          <input class="form-check-input" type="radio" name="gender" id="female" value="{{ seeker.gender }}">
+                          <label class="form-check-label" for="female">Female</label>
+                      </div>
+                      <div class="form-check form-check-inline" style="margin-right: 50px;">
+                       <input class="form-check-input" type="radio" name="gender" id="not-specified" value="{{ seeker.gender }}">
+                       <label class="form-check-label" for="not-specified">Prefer not to say</label>
+                      
+      
+                      </div>
+                  
+                  
+              
+      <br> 
+               
+                  <div class="form-group">
+                      <label class="form-label" for="loc">Location</label>
+                      <input type="text" id="loc" name="loc" class="form-control" value="{{ seeker.loc }}" class onInput="validateloc(this.value)">
+                      <span id="loc_error" class="loc_error"></span>
+                  </div>
+      
+                  <div class="form-group">
+                      <label class="form-label" for="phone">Contact</label>
+                      <input type="tel" id="phone" name="phone"   class="form-control" value="{{ seeker.phone }}" onInput="validatePhone(this.value)">
+                      <span id="phone_error" class="phone_error"></span>
+                  </div>
+      
+                  <div class="form-group">
+                    <label class="form-label"   for="qual">Qualification</label>
+                    <select id="qual" name="qual" class="form-select"  >
+                        <option value="{{ seeker.qual }}"> Select </option>
+                        <option value="{{ seeker.qual }}">Diploma</option>
+                        <option value=value="{{ seeker.qual }}">Graduation</option>
+                        <option value=value="{{ seeker.qual }}">Post Graduation</option>
+                        <option value=value="{{ seeker.qual }}">Other</option>
+                    </select>
+      
+                </div>
+                
+                <div class="form-group" id="otherField" style="display: none;">
+                    <label class="form-label" for="oqual">Specify Other Qualification</label>
+                    <input type="text" id="oqual" name="oqual" value="{{ seeker.oqual }}" class="form-control" placeholder="Specify other qualification">
+                </div>
+                
+                <script>
+                    const qualSelect = document.getElementById("qual");
+                    const otherField = document.getElementById("otherField");
+                    const oqualInput = document.getElementById("oqual");
+                
+                    qualSelect.addEventListener("change", function () {
+                        if (qualSelect.value === "Other") {
+                            otherField.style.display = "block";
+                            oqualInput.  = true;
+                        } 
+                    });
+                </script>
+                <div class="form-group">
+                  <label class="form-label"  for="exp">Work Experience</label>
+                  <select id="exp" name="exp" class="form-select"   >
+                      <option value="{{ seeker.exp }}">Select (in years)</option>
+                      <option value="{{ seeker.exp }}">0 - 1 : Fresher</option>
+                      <option value="{{ seeker.exp }}">2 - 5 : Intermediate</option>
+                      <option value="{{ seeker.exp }}"> More than 5 : Expert</option>
+                  </select>
+              </div>
+              
+      
+                  <div class="form-group">
+                      <label class="form-label" for="skills">Skills</label>
+                      <input type="text" id="skills" name="skills" value="{{ seeker.skills }}" class="form-control" placeholder="Enter your skills"  >
+                      
+                  </div>
+                  
+                  <div class="form-group">
+                      <label class="form-label" for="aadhaar">Aadhaar Number</label>
+                      <input type="text" id="aadhaar"   name="aadhaar" value="{{ seeker.aadhaar }}" class="form-control" onInput="validateAadhaar()">
+                      <span id="aadhaar_error" class="aadhaar_error"></span>
+                  </div>
+      
+                  <div class="form-group">
+                      <label class="form-label" for="res">Upload Resume</label>
+                      <input type="file" id="resume" name="resume"  value="{{ seeker.resume }}"  class="form-control" accept=".pdf,.doc,.docx" onchange="validateFile('resume')"/>
+                  </div>
+      
+                  <div class="form-group">
+                      <label class="form-label" for="pro_pic">Upload Photo</label>
+                      <input type="file" id="pro_pic"   name="pro_pic" class="form-control" value="{{ seeker.pro_pic }}" accept=".jpg,.jpeg,.pdf" onchange="validateFile('pro_pic')" />
+                  </div>
+              </div>
+              
+      
+                  <!-- Submit Button -->
+                  <!-- Centered submission portion -->
+              <!-- Centered submission portion -->
+              <div style="text-align: center;">
+          <button type="submit" class="btn btn-dark btn-lg" id="submitBtn" >Save</button>
+          </div>
+
+              
+          </form>
+          
+      
+      </div>
+      </form>
+      
+      
+      <!-- Validations-->
+      <script>
+          
+         
+              
+              function validatefname(input) {
+                  const nameError = document.getElementById('fname_error');
+                  const trimmedInput = input.trim();
+                  let message = "";
+              
+                  if (trimmedInput === "") {
+                      message = '<i class="bi bi-x-circle-fill text-danger"></i> Name is required.';
+                  } else {
+                      // Trim any trailing spaces from the input
+                      const trimSpaces = trimmedInput.replace(/\s+$/, '');
+              
+                      if (!/^[A-Za-z\s.]*$/.test(trimSpaces)) {
+                          if (/^[A-Za-z]/.test(trimSpaces)) {
+                              message = '<i class="bi bi-x-circle-fill text-danger"></i> Name can only contain letters, spaces, and periods.';
+                          } else {
+                              message = '<i class="bi bi-x-circle-fill text-danger"></i> Name should start with a letter.';
+                          }
+                      } else if (/(?:\.\s*){2,}/.test(trimSpaces)) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> Name should not contain consecutive periods.';
+                      } else if (trimSpaces.split('.').length > 3) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> Name can have a maximum of two periods.';
+                      } else if (trimSpaces.length < 2) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> Name must be at least 2 characters long.';
+                      } else {
+                          message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+                      }
+                  }
+              
+                  nameError.style.color = message.includes('text-danger') ? 'red' : 'green';
+                  nameError.innerHTML = message;
+              }
+              
+              
+              function validatelname(input) {
+                  const nameError = document.getElementById('lname_error');
+                  const trimmedInput = input.trim();
+                  let message = "";
+              
+                  if (trimmedInput === "") {
+                      message = '<i class="bi bi-x-circle-fill text-danger"></i> Name is required.';
+                  } else {
+                      // Trim any trailing spaces from the input
+                      const trimSpaces = trimmedInput.replace(/\s+$/, '');
+              
+                      if (!/^[A-Za-z\s.]*$/.test(trimSpaces)) {
+                          if (/^[A-Za-z]/.test(trimSpaces)) {
+                              message = '<i class="bi bi-x-circle-fill text-danger"></i> Name can only contain letters, spaces, and periods.';
+                          } else {
+                              message = '<i class="bi bi-x-circle-fill text-danger"></i> Name should start with a letter.';
+                          }
+                      } else if (/(?:\.\s*){2,}/.test(trimSpaces)) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> Name should not contain consecutive periods.';
+                      } else if (trimSpaces.split('.').length > 3) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> Name can have a maximum of two periods.';
+                      } else {
+                          message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+                      }
+                  }
+              
+                  nameError.style.color = message.includes('text-danger') ? 'red' : 'green';
+                  nameError.innerHTML = message;
+              }
+              
+          // Validate email
+          function validateEmail() {
+              const emailInput = document.getElementById('email');
+              const email = emailInput.value.trim();
+              const email_error = document.getElementById('email_error');
+          
+              const allowedTlds = [
+                  "com",
+                  "in",
+                  "ac",
+                  "co",
+                  "org",
+                  "net",
+                  "edu",
+                  "gov",
+                  // Add more allowed TLDs here
+              ];
+          
+              const parts = email.split('@');
+              if (parts.length !== 2) {
+                  // Email should have exactly one "@" symbol
+                  const message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid email format';
+                  email_error.innerHTML = message;
+                  emailInput.value = email;
+                  return;
+              }
+          
+              const domain = parts[1];
+              const domainParts = domain.split('.');
+              if (domainParts.length < 2) {
+                  // Domain should have at least one subdomain and one TLD
+                  const message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid email domain';
+                  email_error.innerHTML = message;
+                  emailInput.value = email;
+                  return;
+              }
+          
+              const tld = domainParts.pop().toLowerCase();
+              if (!allowedTlds.includes(tld) || tld.length > 6 || /\.{2,}/.test(domain)) {
+                  // Check if the TLD is in the allowed list, has a valid length (up to 6 characters), and no consecutive dots in the domain
+                  const message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid or unsupported email domain';
+                  email_error.innerHTML = message;
+                  emailInput.value = email;
+                  return;
+              }
+          
+              let message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+              email_error.innerHTML = message;
+              emailInput.value = email; // Remove leading/trailing spaces if any
+          }
+          
+      
+          // Validate phone number
+          function validatePhone(phoneNumber) {
+              const phone_error = document.getElementById("phone_error");
+              let message = "";
+              const phoneRegex = /^[0-9]{10}$/.test(phoneNumber);
+          
+              if (phoneNumber.length >= 10) {
+                  document.getElementById("phone").value = phoneNumber.slice(0, 10);
+              }
+              
+              if (!phoneRegex) {
+                  message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid phone number!';
+              } else if (new Set(phoneNumber).size === 1) {
+                  message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid phone number!';
+              } else {
+                  message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+              }
+          
+              phone_error.innerHTML = message;
+          }
+          
+          // Validate password
+          function validatePassword() {
+              const password = document.getElementById("password").value;
+              const pwMsg = document.getElementById("pwMsg");
+      
+              const lengthValid = /.{8,20}/.test(password); // Corrected regex
+              const hasUpperCase = /[A-Z]/.test(password);
+              const hasLowerCase = /[a-z]/.test(password);
+              const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password);
+              const hasDigit = /[0-9]/.test(password);
+              const whiteSpace = /\s/.test(password);
+      
+              let message = "";
+      
+              if (!lengthValid) {
+                  message = '<i class="bi bi-x-circle-fill text-danger"></i> Password must be 8 to 20 characters long.<br>';
+              }
+              if (password.length >= 20) {
+                  document.getElementById("password").value = password.slice(0, 20);
+              }
+              if (!hasUpperCase) {
+                  message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one uppercase letter.<br>';
+              }
+              if (!hasLowerCase) {
+                  message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one lowercase letter.<br>';
+              }
+              if (!hasSpecialChar) {
+                  message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one special character.<br>';
+              }
+              if (!hasDigit) {
+                  message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must contain at least one digit.<br>';
+              }
+              if (whiteSpace) {
+                  message += '<i class="bi bi-x-circle-fill text-danger"></i> Password must not contain any whitespace characters.';
+              }
+      
+              pwMsg.innerHTML = message;
+      
+              if (lengthValid && hasUpperCase && hasLowerCase && hasSpecialChar && hasDigit && !whiteSpace) {
+                  message = '<i class="bi bi-check-square-fill text-success mt-5"></i> Password is valid!';
+              }
+      
+              pwMsg.innerHTML = message;
+          }
+      
+          function validateConfirmPassword() {
+              const password = document.getElementById('password').value;
+              const confirm_password = document.getElementById('confirmPassword').value;
+              const confirm_password_error = document.getElementById('confirm_password_error');
+              let message = "";
+      
+              if (confirm_password !== password) {
+                  message = '<i class="bi bi-x-circle-fill text-danger"></i> Passwords do not match';
+              } else {
+                  message = '<i class="bi bi-check-square-fill text-success mt-5"></i> Passwords matched';
+              }
+      
+              confirm_password_error.innerHTML = message;
+          }
+      
+          
+              function validateDate() {
+                  const dobInput = document.getElementById('dob');
+                  const dateError = document.getElementById('date_error');
+                  const today = new Date();
+                  let message = "";
+              
+                  const dobValue = dobInput.value.trim(); // Remove leading/trailing spaces
+              
+                  // Check if the date is empty or incomplete
+                  if (!dobValue || dobValue.length < 10) {
+                      message = '<i class="bi bi-x-circle-fill text-danger"></i> Please enter a complete date.';
+                  } else {
+                      const dob = new Date(dobValue);
+              
+                      // Calculate the user's age
+                      const age = today.getFullYear() - dob.getFullYear();
+              
+                      if (dob > today || dob.getFullYear() < 1900) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> Please enter a relevant date.';
+                      } else if (age < 18) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> You must be 18 years old to register.';
+                      } else if (age > 70) {
+                          message = '<i class="bi bi-x-circle-fill text-danger"></i> You are older than 70 years.';
+                      } else {
+                          message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+                      }
+                  }
+              
+                  dateError.innerHTML = message;
+                  return message.includes('text-success');
+              }
+              
+          
+              function validateAadhaar() {
+                  const aadhaar = document.getElementById('aadhaar').value;
+                  const aadhaar_error = document.getElementById('aadhaar_error');
+                  let message = "";
+          
+                  if (aadhaar.length !== 12) {
+                      message = '<i class="bi bi-x-circle-fill text-danger"></i> Aadhaar number must be 12 digits.';
+                  } else {
+                      message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+                  }
+          
+                  aadhaar_error.innerHTML = message;
+                  return message.includes('text-success');
+              }
+          
+              function validateSkills() {
+                  const skills = document.getElementById('skills').value;
+                  const skills_error = document.getElementById('skills_error');
+                  let message = "";
+          
+                  if (skills.trim() === "") {
+                      message = '<i class="bi bi-x-circle-fill text-danger"></i> Skills cannot be empty.';
+                  } else {
+                      message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+                  }
+          
+                  skills_error.innerHTML = message;
+                  return message.includes('text-success');
+              }
+          
+              function validateFile(fileInputId) {
+                  const fileInput = document.getElementById(fileInputId);
+                  const file_error = document.getElementById(`${fileInputId}_error`);
+                  const allowedFormats = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
+                  const fileName = fileInput.value.toLowerCase();
+                  const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+                  let message = "";
+              
+                  if (fileName && !allowedFormats.includes(fileExtension)) {
+                      message = '<i class="bi bi-x-circle-fill text-danger"></i> Invalid file format. Allowed formats: PDF, DOC, DOCX, JPG, JPEG, PNG.';
+                      fileInput.value = ""; // Clear the file input
+                  } else {
+                      message = '<i class="bi bi-check-square-fill text-success mt-5"></i>';
+                  }
+              
+                  file_error.innerHTML = message;
+                  return message.includes('text-success');
+              }
+              
+        
+          
+      </script>
+   
+</html>

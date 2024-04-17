@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JLogin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  
+   <!-- Favicons -->
+   <link href="{% static 'assets/img/favicon2.png' %}" rel="icon">
+   <link href="{% static 'assets/img/search.png' %}" rel="apple-touch-icon">
+  
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- jQuery UI CSS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+  <!-- =======================================================
+  * Template Name: JobMate
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/JobMate-free-onepage-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    /* Increase button size on hover */
+    .btn.btn-dark:hover {
+        transform: scale(1.05);
+    }
+
+    /* Change button background color to green on hover */
+    .btn.btn-dark:hover {
+        background-color: #21cfaf; /* Green color with opacity */
+        color: black;
+        #btn
+    {
+      background-color: #007a6c;
+    }
+  
+    .custom-pagination .page-link {
+        color: #dc3545 !important; /* Custom text color */
+        background-color: #f8f9fa !important; /* Custom background color */
+        border-color: #dc3545 !important; /* Custom border color */
+    }
+
+    /* Custom pagination link hover style */
+    .custom-pagination .page-link:hover {
+        color: #fff !important; /* White text color on hover */
+        background-color: #dc3545 !important; /* Custom background color on hover */
+        border-color: #dc3545 !important; /* Custom border color on hover */
+    }
+    .card {
+        display: none; /* Initially hide all cards */
+    }
+    
+    @media (min-width: 768px) {
+        #cardDeck {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .card {
+            display: block;
+            flex: 0 0 33.333%; /* 3 cards in a row */
+            max-width: 33.333%; /* 3 cards in a row */
+        }
+    }
+    
+
+    #session {
+      background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease; /* Add transition for smooth hover effect */
+  }
+
+  #session:hover {
+      background-color: #007a6c; /* Change background color on hover */
+      color: white; /* Change text color on hover */
+  
+    }
+    .sidebar {
+      /* Your existing sidebar styles */
+      /* Make sure to set an initial position for the sidebar */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+  
+    .sidebar-open {
+      transform: translateX(0);
+    }
+  
+    .sidebar-toggle {
+      /* Add styling for the hamburger menu icon */
+    }
+    .profile-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+  }
+  
+  .profile-box h3 {
+      margin-top: 0;
+  }
+  #noCandidatesToast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 9999; /* Ensure it's on top of other elements */
+    display: none; /* Initially hidden */
+}
+#abc {
+    background-color: black;;
+      color: white;
+      padding: 10px 10px;
+      margin: 50px;
+}
+#noCandidatesToast.show {
+    display: block; /* Show the toast */
+}
+#searchButton {
+    border-radius: 20px; /* Rounded corners */
+    background-color: #007bff; /* Bootstrap primary color */
+    border-color: #007bff; /* Border color */
+    color: white; /* Text color */
+}
+
+/* Hover effect for the search button */
+#searchButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3; /* Darker blue border on hover */
+}
+
+/* Active (pressed) state for the search button */
+#searchButton:active {
+    background-color: #0056b3; /* Darker blue when pressed */
+    border-color: #0056b3; /* Darker blue border when pressed */
+}
+#abc {
+    height: 100vh; /* Set the height of the column to full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Align items to the bottom and top */
+}
+
+.input-group {
+    margin-bottom: 20px; /* Add spacing between input groups */
+}
+
+form {
+    margin-top: auto; /* Push the form to the bottom of the column */
+}
+    
+</style>
+</head>
+<body>
+
+
+    {% include "prohead.html" %}
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+<br>
+
+    <body>
+        <br>
+        <br>
+      
+        <div class="toast" id="noCandidatesToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-body">
+                No candidates found with the given name.
+            </div>
+            <div class="toast" id="noInterviewsToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+                <div class="toast-body">
+                    No interviews found for the selected date.
+                </div>
+                <br>
+            </div>
+
+            <br>
+            
+        </div>
+        <br>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3" id="abc">
+                    <div class="input-group">
+                        <input type="text" id="candidateName" class="form-control text-center" placeholder="Search by Name">
+                    </div>
+                    <br>
+                        <div>
+                            <button id="searchButton" class="btn btn-success" type="button" style="display: block; margin: 0 auto;">Search</button>
+                        </div>
+                    <br>
+                    <form method="GET" action="" onsubmit="return validateDates()" style="text-align: center;">
+                        <div>
+                            <label for="start_date">Start Date:</label>
+                            <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}"><br>
+                        </div>
+                        <br>
+                        <div>
+                            <label for="end_date">End Date:</label>
+                            <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}"><br>
+                        </div>
+                        <br>
+                        <div>
+                            Sort By:
+                            <select id="sort" name="sort">
+                                <option value="">--Select--</option>
+                                <option value="date_asc" {% if request.GET.sort == 'date_asc' %}selected{% endif %}>Oldest First</option>
+                                <option value="date_desc" {% if request.GET.sort == 'date_desc' %}selected{% endif %}>Newest First</option>
+                            </select><br><br>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-lg d-block mx-auto">Filter</button>
+                    </form>
+                
+        
+                
+        
+
+                    
+                    <div class="col-md-12 mb-4">
+                        
+                    </div>
+                    
+                </div>
+                <div class="col-md-9">
+                    <div class="container">
+                        <div class="row mb-4">
+                            <h5>List of Scheduled Interviews</h2>
+                        </div>
+                       
+                        <div class="row">
+                            {% for interview in scheduled_interviews %}
+                            <div class="col-md-12 mb-4">
+                                <div class="card" style="min-height: 200px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-3 d-flex align-items-center justify-content-center">
+                                            <img src="{{ interview.seeker_id.pro_pic.url }}" class="rounded-circle" alt="Profile Image" style="height: 200px; width: 200px;">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ interview.seeker_id.user.first_name }} {{ interview.seeker_id.user.last_name }}</h5>
+                                                <p class="card-text">Job Title: {{ interview.job_id.title }}</p>
+                                                <p class="card-text">
+                                                    Mode:
+                                                    {% if interview.mode == "online" %}
+                                                        Online <br>
+                                                        Platform: {{ interview.platform }} <br>
+                                                        Link: <a href="{{ interview.link }}">{{ interview.link }}</a>
+                                                    {% else %}
+                                                        In-Person <br>
+                                                        Venue: {{ interview.venue }}
+                                                    {% endif %}
+                                                </p>
+                                               
+                                                <p class="card-text">Interview Date: <span class="interview-date" data-scheduled-date="{{ interview.scheduled_date }}">{{ interview.scheduled_date }}</span></p>
+                                                <p class="card-text">
+                                                    Status:
+                                                    {% if interview.application.status == "Pending" %}
+                                                        <span class="badge bg-warning text-dark status-badge">{{ interview.application.status }}</span>
+                                                    {% elif interview.application.status == "Selected" %}
+                                                        <span class="badge bg-success status-badge">{{ interview.application.status }}</span>
+                                                    {% elif interview.application.status == "Scheduled" %}
+                                                        <span class="badge bg-info status-badge">{{ interview.application.status }}</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary status-badge">{{ interview.application.status }}</span>
+                                                    {% endif %}
+                                                </p>
+                                                <div class="mt-auto text-end">
+                                                    <a href="{{ interview.seeker_id.resume.url }}" class="btn btn-danger">View Resume</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        
+                </div>
+            </div>
+         </div>
+         <script>
+            $(document).ready(function() {
+                $("#dateSearchButton").click(function() {
+                    var inputDate = $("#dateSearch").val();
+                    var inputDateParts = inputDate.split("-");
+                    var searchDate = new Date(inputDateParts[2], inputDateParts[1] - 1, inputDateParts[0]);
+                    var formattedSearchDate = searchDate.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    console.log("Search Date in Original Format: " + formattedSearchDate);
+                    
+                    $(".interview-date").each(function() {
+                        var cardDateStr = $(this).text().trim();
+                        var cardDateParts = cardDateStr.split(", ");
+                        var cardDate = new Date(cardDateParts[0]);
+                        if (!isNaN(cardDate)) {
+                            var formattedCardDate = cardDate.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                            console.log("Interview Date in Original Format: " + formattedCardDate);
+                            
+                            if (formattedCardDate === formattedSearchDate) {
+                                $(this).closest(".col-md-12").parent().show();
+                            } else {
+                                $(this).closest(".col-md-12").parent().hide();
+                            }
+                        } else {
+                            console.log("Invalid date format: " + cardDateStr);
+                        }
+                    });
+                });
+            });
+            function validateDates() {
+                var startDate = document.getElementById('start_date').value;
+                var endDate = document.getElementById('end_date').value;
+                
+                if (startDate > endDate) {
+                    // Show Bootstrap error message
+                    var alertElement = document.createElement('div');
+                    alertElement.classList.add('alert', 'alert-danger');
+                    alertElement.innerHTML = 'Start Date cannot be greater than End Date.';
+                    
+                    var formElement = document.querySelector('form');
+                    formElement.insertBefore(alertElement, formElement.firstChild);
+                    
+                    // Prevent form submission
+                    return false;
+                }
+                
+                return true;
+            }
+
+         document.getElementById('searchButton').addEventListener('click', function() {
+            var input, filter, cards, card, title, i, found;
+            input = document.getElementById('candidateName');
+            filter = input.value.toUpperCase();
+            cards = document.getElementsByClassName('card');
+            found = false;
+            for (i = 0; i < cards.length; i++) {
+                card = cards[i];
+                title = card.getElementsByTagName('h5')[0];
+                if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+                    card.style.display = '';
+                    found = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+            if (!found) {
+                toastr.error('No candidates found with the given name.', '', {
+                    positionClass: 'toast-bottom-right',
+                    progressBar: true,
+                    progressBarColor: 'rgba(255, 0, 0, 1)'
+                });
+            }
+         });
+      
+        
+         document.getElementById('filterButton').addEventListener('click', function() {
+            var statusSelected = document.getElementById('statusFilter').value;
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(function(card) {
+                var statusBadge = card.querySelector('.card-text .status-badge').textContent.trim().toLowerCase();
+                if (statusSelected === 'all' || statusBadge.includes(statusSelected)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+         });
+         
+            document.getElementById('filterButton').addEventListener('click', function() {
+  document.getElementById('candidateName').value = ''; // Clear the search input
+});
+
+
+         </script>
+            
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@.16.1/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+        </body>
+</html>
